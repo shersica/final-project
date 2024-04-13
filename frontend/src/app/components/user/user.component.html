@@ -1,0 +1,77 @@
+<h2>{{username | titlecase}}'s Profile</h2>
+
+<img class="profilePic" [src]="profile.profilePic" width="200" alt="Profile Picture">
+<p>{{profile.bio}}</p>
+
+<div *ngIf="currentUser?.username !== username; else isCurrentUser">
+    <div *ngIf="isFollowing; else follow">
+        <button (click)="unfollowUser(username, currentUser?.username)">Unfollow</button>
+    </div>
+</div>
+
+<ng-template #isCurrentUser>
+    <button [routerLink]="['/settings', currentUser?.username]">Settings</button>
+</ng-template>
+
+<ng-template #follow>
+    <button (click)="followUser(username, currentUser?.username)">Follow</button>
+</ng-template>
+
+
+<mat-tab-group>
+    <mat-tab class="tabs" label="Library">
+        <div *ngFor="let game of userLibrary; let i = index">
+            <p>Status: {{game.gameStatus}}</p>
+            <div *ngIf="currentUser?.username == username">
+                <form [formGroup]="gameForms[i]">
+                    <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                        <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                            {{ status }}
+                        </option>
+                    </select>
+                    <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                        <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                            {{ rating }}
+                        </option>
+                    </select>
+                </form>
+            </div>
+            <a [routerLink]="['/game', game.gameId]">{{game.name}}</a>
+            <p>Id: {{game.gameId}}</p>
+            <img [src]="game.images[0]" alt="" width="200">
+            <div *ngFor="let platform of game.platforms">
+                <span>{{platform}}</span>
+            </div>
+            <p>Released date: {{game.releaseDate}}</p>    
+            
+            <button (click)="deleteFromUserLibrary(game.gameId)">Delete from Library</button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Following" [routerLink]="['/user/following', username]"><app-user-following></app-user-following> </mat-tab>
+    <mat-tab label="Followers" [routerLink]="['/user/followers', username]"><app-user-followers></app-user-followers> </mat-tab>
+    <mat-tab label="Reviews" [routerLink]="['/user', username, 'reviews']"><app-user-reviews></app-user-reviews> </mat-tab>
+  </mat-tab-group>
+
+<!-- <div>
+    <a [routerLink]="['/user/following', username]">Following</a>
+    <a [routerLink]="['/user/followers', username]">Followers</a>
+    <a [routerLink]="['/user', username, 'reviews']">Reviews</a>
+</div>
+
+<div>
+    <h3>Game Platforms</h3>
+</div>
+
+<div>
+    <h3>Favourite games</h3>
+
+    <div *ngFor="let game of favGames">
+        <p>{{game.name}}</p>
+    </div>
+</div>
+
+<div>
+    <h3>Library</h3>
+
+
+</div> -->

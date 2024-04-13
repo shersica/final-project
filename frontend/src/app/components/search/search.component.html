@@ -1,0 +1,17 @@
+<!-- <div>
+    <form (submit)="search()"  [formGroup]="searchForm">
+        <input type="text" formControlName="query" placeholder="Search for games...">
+        <button type="submit">Search</button>
+    </form>
+</div> -->
+
+<div *ngFor="let game of games$ | async">
+    <a [routerLink]="['/game', game.gameId]">{{game.name}}</a>
+    <p>Id: {{game.gameId}}</p>
+    <img [src]="game.images[0]" alt="" width="200">
+    <p>Rating: {{game.rating}}</p>
+    <div *ngFor="let platform of game.platforms">
+        <span>{{platform}}</span>
+    </div>
+    <p>Released date: {{game.releaseDate}}</p>
+</div>

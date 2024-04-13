@@ -1,0 +1,39 @@
+/* .spacer {
+    flex: 1 1 auto
+} */
+
+.mat-toolbar {
+    background: #151515;
+    height: 4em;
+}
+
+
+.search-form {
+  /* border-radius: 20px; */
+  overflow: hidden;
+  margin: auto;
+}
+
+.search-input {
+    border-radius: 20px;
+    width: 75em;
+    height: 2em;
+    padding-left: 15px; 
+}
+
+.logo {
+    display: flex;
+    width: 8%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.home-wrapper{
+    background-color: #151515;
+    color: azure;
+}
+
+.title{
+    padding: 24px;
+}
+

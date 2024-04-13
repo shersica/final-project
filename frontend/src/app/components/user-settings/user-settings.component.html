@@ -1,0 +1,15 @@
+<h2>Edit Profile</h2>
+
+<form (submit)="processForm()" [formGroup]="form">
+    <label for="photo">Photo:</label>
+    <input type="file" formControlName="photo" accept="image/*" id="photo" #photo>
+    
+    <label for="name">Name:</label>
+    <input type="text" formControlName="name" id="name">
+    
+    <label for="bio">Bio:</label>
+    <textarea name="bio" id="bio" cols="10" rows="3" formControlName="bio"></textarea>
+    
+    <button type="submit">Save Changes</button>
+  </form>
+  

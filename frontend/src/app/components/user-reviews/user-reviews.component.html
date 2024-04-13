@@ -1,0 +1,15 @@
+<div>
+    <h3>Reviews</h3>
+    <table border="1">
+        <div *ngFor="let review of reviews">
+            <p>{{review.gameName}}</p>
+            <p>{{review.comment}}</p>
+            <p>By: {{review.reviewer}}</p>
+            <p>{{review.date}}</p>
+            <div *ngIf="currentUser?.username == this.username">
+                <button (click)="editReview(review.gameId, currentUser?.username)">Edit Review</button>
+                <button (click)="deleteReview(review.id)">Delete</button>
+            </div>
+        </div>
+    </table>
+</div>

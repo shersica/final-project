@@ -1,0 +1,13 @@
+<h2>{{username | titlecase}}'s Followers</h2>
+
+<div *ngIf="followers.length > 0; else noFollowers">
+    <div *ngFor="let follower of followers">
+      <p [routerLink]="['/user', follower]">{{ follower }}</p>
+    </div>
+  </div>
+  
+  <ng-template #noFollowers>
+    <p>You have no followers.</p>
+    <p [routerLink]="['/user', 'testnew']" >Find Friends!</p>
+  </ng-template>
+  

@@ -1,0 +1,52 @@
+.example-card {
+    max-width: 400px;
+    background-color: #202020;
+    transition: transform 0.3s ease;
+  }
+
+.example-card:hover{
+    transform: scale(1.1);
+}
+
+.home-wrapper{
+    background-color: #151515;
+    color: azure;
+}
+  
+ .mat-card-title {
+    justify-content: center;
+    color: azure;
+}
+
+ .container {
+    padding: 24px;
+  }
+
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .mat-card-content{
+    align-items: stretch;
+  }
+ 
+  .title{
+    padding: 24px;
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.custom-link:hover {
+    text-decoration: none;
+}

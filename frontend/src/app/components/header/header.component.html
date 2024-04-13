@@ -1,0 +1,45 @@
+<mat-toolbar color="primary" >
+    <img class="logo" [src]="logoUrl" mat-button [routerLink]="['/home']">
+    <a mat-button [routerLink]="['/about']">About</a>
+    <form (submit)="search()" [formGroup]="searchForm" class="search-form">
+        <!-- <mat-form-field appearance="fill" class="search-field"> -->
+            <!-- <mat-label>Search for games...</mat-label> -->
+            <!-- <button mat-button type="submit" class="search-button">
+                <mat-icon>search</mat-icon>
+            </button> -->
+            <input type="text" formControlName="query" class="search-input" placeholder="Search for games...">
+
+        <!-- </mat-form-field> -->
+    </form>
+    <div class="spacer"></div> <!-- Add a spacer to push the following buttons to the right -->
+    <div *ngIf="!isLoggedIn" class="button-container">
+        <a mat-button [routerLink]="['/login']">Login</a>
+        <a mat-button [routerLink]="['/register']">Register</a>
+    </div>
+    <div *ngIf="user$ | async as user " class="button-container">
+        <a mat-button [routerLink]="['/user', user.username]"><mat-icon>persons</mat-icon>Profile</a>
+        <a mat-button (click)="logout()">Logout</a>
+    </div>
+</mat-toolbar>
+
+
+
+    <div class="home-wrapper">
+        <!-- <h1><a [routerLink]="['/home']">PlayPal</a></h1> -->
+        
+        <div class="title" *ngIf="user$ | async as user ">
+            <h2>Welcome, <a [routerLink]="['/user', user.username]">{{ user.username | titlecase}}</a>!</h2>
+            <!-- <button (click)="logout()">Logout</button> -->
+        </div>
+<!-- 
+        <div>
+            <form (submit)="search()"  [formGroup]="searchForm">
+                <input type="text" formControlName="query" placeholder="Search for games...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div *ngIf="!isLoggedIn">
+            <button [routerLink]="['/login']">Login</button>
+            <button [routerLink]="['/register']">Register</button>
+        </div> -->
+    </div>

@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    justify-content: center; /* Horizontally center the form */
+    align-items: center; /* Vertically center the form */
+    height: 100vh; /* Adjust height as needed */
+    color: azure;
+  }
+  
+  /* .form-wrapper {
+    max-width: 400px; 
+    width: 100%;
+} */
+  
+  .form {
+    background-color: #202020; /* Adjust background color as needed */
+    padding: 80px; /* Add padding for spacing */
+    max-width: 400px;
+    width: 100%;
+    border-radius: 4%;
+  }
+  
+  .login {
+    text-align: center; /* Center the login title */
+    padding-bottom: 20px;
+  }
+  
+  .form div {
+    margin-bottom: 15px; /* Add margin between form elements */
+  }
+  
+  .form button {
+    margin-top: 15px; /* Add margin above the button */
+    display: block; /* Make the button a block element */
+    margin: 0 auto; /* Center the button horizontally */
+  }
+  
+.field {
+    width: 100%;
+}
+
+.label {
+    color: azure;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    color: azure !important;
+  }
+  
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix input {
+    color: azure !important;
+  }

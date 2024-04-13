@@ -1,0 +1,97 @@
+{
+  "configVersion": 1,
+  "timestamp": 1713041223387,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/chunk-24EDVONY.js",
+        "/chunk-ZEQL73EF.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main-5EJCFHXC.js",
+        "/manifest.webmanifest",
+        "/polyfills-RT5I6R6G.js",
+        "/scripts-ORH7G7A2.js",
+        "/styles-ECB44WKF.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/kaboom/map.json",
+        "/assets/kaboom/map.png",
+        "/assets/kaboom/monogram.ttf",
+        "/assets/kaboom/spritesheet.png",
+        "/assets/playpal.png",
+        "/media/monogram-EVQZ2KPT.ttf"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "/assets/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "/assets/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "/assets/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "/assets/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "/assets/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "/assets/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "/assets/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/assets/kaboom/map.json": "76f7f5c8a4dc9300ff015cf4372bc62a1d7ec1f0",
+    "/assets/kaboom/map.png": "02ebdcab3ed61a6eb557277a9232c653d9a26483",
+    "/assets/kaboom/monogram.ttf": "3bc657b12278f55cec336bc5b7b4f26adc9be009",
+    "/assets/kaboom/spritesheet.png": "2a54be50dda5a1d5c3cf41f114b3a396295d78ba",
+    "/assets/playpal.png": "31e83f84f50fcc3d6b06b8f6344687492349ea42",
+    "/chunk-24EDVONY.js": "453171b53d7abfd662e1c8db1bee1888cf0e1165",
+    "/chunk-ZEQL73EF.js": "4bf6a83237743ede76e160a99a68fde3a4f5e85e",
+    "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/index.html": "4dab3ec1818802c417829f1e936cb0adcac016e1",
+    "/main-5EJCFHXC.js": "688a54d45d2b9846262da09de4ee027d66cfd403",
+    "/manifest.webmanifest": "63b272452f7323ec09705c84044faa394ce82a79",
+    "/media/monogram-EVQZ2KPT.ttf": "3bc657b12278f55cec336bc5b7b4f26adc9be009",
+    "/polyfills-RT5I6R6G.js": "fe9f024576f21ff6314cf8f8332cde58b9a12416",
+    "/scripts-ORH7G7A2.js": "07ed8b8def5e69952560a0bbc738ba335804d6ae",
+    "/styles-ECB44WKF.css": "4b1f191e8c167a47727fcd1a2df72e1e4bda0bf0"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
