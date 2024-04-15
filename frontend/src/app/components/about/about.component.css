@@ -76,5 +76,11 @@
     text-align: center;
 }
 
-.map-container {
+.container {
+    /* padding-top: 24px; */
+    padding: 24px;
+    color: azure;
+    background-size: cover;
+    background-color: #202020;
+    
 }

@@ -34,11 +34,15 @@ export class GameComponent implements OnInit {
   hasReviewed = false
   reviewInteraction!: ReviewInteractions
   likeStats!: LikeStats[]
-
+  backgroundImg! : string
 
   ngOnInit(): void {
     this.gameId = parseInt(this.activatedRoute.snapshot.params['gameId'], 10);
     this.gameSub$ = this.gameSvc.getGameById(this.activatedRoute.snapshot.params['gameId'])
+    this.gameSvc.getGameById(this.activatedRoute.snapshot.params['gameId']).subscribe((resp: GameDetails) => {
+      this.backgroundImg = resp.backgroundImage
+      console.log("image:", this.backgroundImg)
+    })
     this.store.select(isLoggedIn).subscribe(resp => {
       this.isLoggedIn = resp
       console.log('login?:', this.isLoggedIn)
@@ -119,6 +123,7 @@ export class GameComponent implements OnInit {
         userRating: 'Not Yet Rated'
       }
       this.store.dispatch(addToUserLibrary({game : gameToAdd}))
+      
       console.log('added game')
     } else {
       this.router.navigate(['/login'])

@@ -1,0 +1,30 @@
+.example-card {
+    max-width: 200px;
+    background-color: rgba(0, 0, 0, .3);
+    transition: transform 0.3s ease;
+  }
+
+.example-card:hover{
+    transform: scale(1.1);
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.custom-link:hover {
+    text-decoration: none;
+}
+
+
+.avatar {
+    background-size: cover;
+  }
+
+  .wrapper{
+    background-color: #151515;
+    color: azure;
+    padding: 24px;
+    height: 100vh;
+}

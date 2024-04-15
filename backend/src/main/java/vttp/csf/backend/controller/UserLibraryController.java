@@ -44,7 +44,8 @@ public class UserLibraryController {
     @ResponseBody
     public ResponseEntity<String> saveUserLibrary(@RequestBody String payload){
         
-        System.out.println(payload);
+        System.out.println("saving user Library");
+
 
         JsonReader reader = Json.createReader(new StringReader(payload));
         JsonArray jsonArray = reader.readArray();
@@ -56,8 +57,10 @@ public class UserLibraryController {
                 String id = "";
                 if(!game.getString("_id").isEmpty()){
                     id = game.getString("_id");
+                    System.out.println("Current Id:" + id);
                 } else {
                     id = UUID.randomUUID().toString().substring(0,8);
+                    System.out.println("New ID: " + id);
                 }
                 int gameId = game.getInt("gameId");
                 String username = game.getString("username");
@@ -114,7 +117,7 @@ public class UserLibraryController {
             .add("error", "Fail to save user library")
             .build();
         
-            return ResponseEntity.ok(error.toString());   
+            return ResponseEntity.badRequest().body(error.toString()); 
 
         }
     }
@@ -125,6 +128,29 @@ public class UserLibraryController {
         return ResponseEntity.ok(userLibrarySvc.getUserLibraryList(username));
     }
 
+
+    @PostMapping(path = "/deleteFromLibrary")
+    @ResponseBody
+    public ResponseEntity<String> deleteFromUserLibrary(@RequestBody String payload){
+        System.out.println("deleteing id: "+ payload);
+
+        try {
+            userLibrarySvc.deleteFromUserLibraryById(payload);
+
+            JsonObject success = Json.createObjectBuilder()
+            .add("success", "Deleted from user library ")
+            .build();
+        
+        return ResponseEntity.ok(success.toString());
+        } catch (Exception e) {
+            JsonObject error = Json.createObjectBuilder()
+            .add("error", "Fail to save user library")
+            .build();
+        
+            return ResponseEntity.badRequest().body(error.toString()); 
+        }
+        
+    }
 
 
 }

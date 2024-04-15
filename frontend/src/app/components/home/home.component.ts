@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   private gameSvc = inject(GameService)
   games$!: Promise<Game[]>
   orderByControl = new FormControl('-relevance'); // Default orderBy option
+  page = 1
 
 
   ngOnInit(): void {
@@ -20,12 +21,18 @@ export class HomeComponent implements OnInit {
   }
 
   filter(){
+    this.page = 1
+    this.loadGames()
+  }
+
+  nextPage(){
+    this.page ++
     this.loadGames()
   }
 
   private loadGames(): void {
     const orderBy = this.orderByControl.value as string
-    this.games$ = this.gameSvc.discoverGames(orderBy)
+    this.games$ = this.gameSvc.discoverGames(orderBy, this.page)
   }
 
   

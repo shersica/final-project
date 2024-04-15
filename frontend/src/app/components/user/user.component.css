@@ -5,5 +5,133 @@
 }
 
 .tabs {
+}
+
+.container {
+    height: 100vh; /* Adjust height as needed */
+    color: azure;
+    background-color: #151515;
+    padding:24px
+  }
+
+:host .mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
+    --mdc-tab-indicator-active-indicator-color: white;
+    --mat-tab-header-disabled-ripple-color: rgba(255, 255, 255, 0.38);
+    --mat-tab-header-pagination-icon-color: white;
+    --mat-tab-header-inactive-label-text-color: rgba(255, 255, 255, 0.6);
+    --mat-tab-header-active-label-text-color: white;
+    --mat-tab-header-active-ripple-color: white;
+    --mat-tab-header-inactive-ripple-color: white;
+    --mat-tab-header-inactive-focus-label-text-color: rgba(255, 255, 255, 0.6);
+    --mat-tab-header-inactive-hover-label-text-color: rgba(255, 255, 255, 0.6);
+    --mat-tab-header-active-focus-label-text-color: white;
+    --mat-tab-header-active-hover-label-text-color: white;
+    --mat-tab-header-active-focus-indicator-color: white;
+    --mat-tab-header-active-hover-indicator-color: white;
+
+    --mat-expansion-container-text-color: white;
+    --mat-expansion-container-background-color: #202020;
+
+    --mat-expansion-actions-divider-color: white;
+    --mat-expansion-header-hover-state-layer-color: white;
+    --mat-expansion-header-focus-state-layer-color: white;
+    --mat-expansion-header-disabled-state-text-color: white;
+    --mat-expansion-header-text-color:white;
+    --mat-expansion-header-description-color: white;
+    --mat-expansion-header-indicator-color: white;
+}
+
+.expansion-panel-1.mat-expansion-panel .mat-expansion-panel-header {
+    background-color: #202020;
+}
+
+.expansion-panel-1 .mat-expansion-panel-header-title {
+    color: azure !important;
+}
+
+.expansion-panel-1 .mat-expansion-panel-header-description {
+    color: red !important;
+}
+
+.expansion-panel-1 .mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header-title{
+    color: black;
+}
+
+::ng-deep .expansion-panel-1 .mat-expansion-panel-content {
+    background-color: #202020;
     color: white;
+}
+
+::ng-deep .expansion-panel-1 .mat-expansion-panel-body{
+    padding: 30px;
+    color: white;
+    height: 50vh;
+}
+
+/* .expansion-panel-1 .mat-expansion-panel-header[aria-disabled=true]{
+    background-color: lightblue;
+}
+
+.expansion-panel-1 .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-title {
+    color: blue;
+} */
+
+.expansion-panel-1.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]){
+    background-color: gray;
+}
+
+
+.example-card {
+    max-width: 400px;
+    background-color: #151515;
+    transition: transform 0.3s ease;
+  }
+
+.example-card:hover{
+    transform: scale(1.1);
+}
+
+.home-wrapper{
+    background-color: #151515;
+    color: azure;
+    height: 280vh;
+
+}
+  
+ .mat-card-title {
+    justify-content: center;
+    color: azure;
+}
+
+ .game-container {
+    padding: 24px;
+  }
+
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .mat-card-content{
+    align-items: stretch;
+  }
+ 
+  .title{
+    padding: 24px;
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.custom-link:hover {
+    text-decoration: none;
 }

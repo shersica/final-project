@@ -1,15 +1,32 @@
-<div>
-    <h3>Reviews</h3>
-    <table border="1">
-        <div *ngFor="let review of reviews">
-            <p>{{review.gameName}}</p>
-            <p>{{review.comment}}</p>
-            <p>By: {{review.reviewer}}</p>
-            <p>{{review.date}}</p>
+<div class="container">
+    <mat-card *ngFor="let review of reviews">
+        <mat-card-header>
+            <mat-card-title><a [routerLink]="['/game', review.gameId]">{{review.gameName}}</a></mat-card-title>
             <div *ngIf="currentUser?.username == this.username">
-                <button (click)="editReview(review.gameId, currentUser?.username)">Edit Review</button>
-                <button (click)="deleteReview(review.id)">Delete</button>
-            </div>
-        </div>
-    </table>
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editReview(review.gameId, currentUser?.username)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteReview(review.id)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                <!-- <button mat-button color="primary"  (click)="editReview(review.gameId, currentUser?.username)"><mat-icon>edit</mat-icon></button>
+                <button mat-button color="warn"  (click)="deleteReview(review.id)"><mat-icon>delete</mat-icon></button> -->
+                </div>
+        </mat-card-header>
+
+        <br>
+        <mat-card-content>
+            <p>{{review.comment}}</p>
+            <br>
+            <p>By <a [routerLink]="['/user', review.reviewer]">{{review.reviewer | titlecase}}</a></p>
+            <p>Posted on {{review.date | date}}</p>
+        </mat-card-content>
+    </mat-card>
 </div>

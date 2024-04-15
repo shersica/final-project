@@ -197,13 +197,14 @@ public class GameService {
         
     }
 
-    public List<Game> discoverGames(String orderBy){
+    public List<Game> discoverGames(String orderBy, int page){
         RestTemplate template = new RestTemplate();
 
         String url = UriComponentsBuilder
             .fromUriString(gamesUrl + "/lists/main")
             .queryParam("discover", true)
             .queryParam("ordering", orderBy)
+            .queryParam("page", page)
             .queryParam("page_size", 20)
             .queryParam("key", apiKey)
             .toUriString();

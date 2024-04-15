@@ -33,31 +33,59 @@ export class UserComponent implements OnInit {
   following : string[] = []
   profile!: UserProfile
   isFollowing!: boolean
+  panelOpenState = false
 
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.username = params['username'];
-      this.userSvc.getUserLibrary(this.username).subscribe((resp: UserLibrary[]) => {
-        this.store.dispatch(Actions.setUserLibrary({ userLibrary: resp }));
-        resp.forEach(game => {
-          const form = this.createForm(game.gameStatus, game.userRating);
-          this.gameForms.push(form);
-        });
-           // Subscribe to the userLibrary store state to get userLibrary data
+      this.store.pipe(select(selectUser)).subscribe(user => {
+        this.currentUser = user;
+      });
+
+      //if is current user's library -> selectUserLibrary -> push to form
+      if(this.currentUser?.username === this.username){
         this.store.pipe(select(selectUserLibrary)).subscribe(userLibrary => {
           this.userLibrary = userLibrary;
-          console.log(userLibrary);
+          console.log('current user userlibrary:',userLibrary);
+          this.userLibrary.forEach(game => {
+            const form = this.createForm(game.gameStatus, game.userRating);
+            this.gameForms.push(form);
+          })
         });
-      });
+      } else {
+        //Get UL -> DIsplay 
+        this.userSvc.getUserLibrary(this.username).subscribe((resp: UserLibrary[]) => {
+          // this.store.dispatch(Actions.setUserLibrary({ userLibrary: resp }));
+          resp.forEach(game => {
+            const form = this.createForm(game.gameStatus, game.userRating);
+            this.gameForms.push(form);
+          });
+ 
+          this.userLibrary = resp;
+        });
+      }
+
+      // this.userSvc.getUserLibrary(this.username).subscribe((resp: UserLibrary[]) => {
+      //   this.store.dispatch(Actions.setUserLibrary({ userLibrary: resp }));
+      //   resp.forEach(game => {
+      //     const form = this.createForm(game.gameStatus, game.userRating);
+      //     this.gameForms.push(form);
+      //   });
+      //      // Subscribe to the userLibrary store state to get userLibrary data
+      //   this.store.pipe(select(selectUserLibrary)).subscribe(userLibrary => {
+      //     this.userLibrary = userLibrary;
+      //     console.log(userLibrary);
+      //   });
+      // });
       //Get User Profile
       this.userSvc.getUserProfile(this.username).subscribe(resp => this.profile = resp )
     });
   
     // Subscribe to the currentUser store state to get currentUser data
-    this.store.pipe(select(selectUser)).subscribe(user => {
-      this.currentUser = user;
-    });
+    // this.store.pipe(select(selectUser)).subscribe(user => {
+    //   this.currentUser = user;
+    // });
 
     //Check if currentuser is following user
     this.userSvc.getUserSocials(this.currentUser?.username).subscribe((resp: UserSocials) => {
@@ -78,11 +106,16 @@ export class UserComponent implements OnInit {
     const status = this.gameForms[index].value['gameStatus'];
     const rating = this.gameForms[index].value['userRating'];
     this.store.dispatch(updateUserLibrary({gameId : gameId , gameStatus : status, userRating : rating}))
-    this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
+    console.log('updating user library:', this.userLibrary)
   }
 
-  deleteFromUserLibrary(gameId : number){
-    this.store.dispatch(deleteFromUserLibrary({gameId : gameId}))
+  deleteFromUserLibrary(id: string, gameId : number){
+    if(id === ''){
+      this.store.dispatch(deleteFromUserLibrary({gameId : gameId}))
+    } else {
+      this.store.dispatch(deleteFromUserLibrary({gameId : gameId}))
+      this.userSvc.deleteFromUserLibrary(id).subscribe(resp => console.log(resp))
+    }
   }
 
   followUser(usernameToFollow : string, currentUser : any){

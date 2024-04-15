@@ -1,4 +1,4 @@
-<h2>Review the game</h2>
+<!-- <h2>Review the game</h2>
 
 <h5>{{game.name}}</h5>
 
@@ -24,4 +24,33 @@
         </td>
       </tr>
     </table>
-  </form>
+  </form> -->
+
+  <div class="container" [style.background-image]="'url(' + backgroundImg + ')'">
+    <div class="form" (submit)="submitReview()">
+      <h1 class="login">Review Game</h1>
+      <h2 class="login">{{game.name}}</h2>
+      <form [formGroup]="reviewForm">
+        <div>
+          <mat-form-field class="field" appearance="outline">
+            <mat-label class="label">Rating</mat-label>
+            <mat-select [(value)]="this.userRating" formControlName="rating">
+              <mat-option></mat-option>
+              @for (rating of ratingTypes; track rating) {
+                <mat-option [value]="rating">{{ rating }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="field" appearance="outline">
+            <mat-label class="label">Comment</mat-label>
+            <textarea matInput formControlName="comment" cols="30" rows="10"></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button  type="submit">Publish</button>
+        </div>
+      </form>
+    </div>
+</div>

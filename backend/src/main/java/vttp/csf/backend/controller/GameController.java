@@ -71,10 +71,10 @@ public class GameController {
     }
 
     @GetMapping(path = "/games/discover")
-    public ResponseEntity<String> discoverGames(@RequestParam(defaultValue = "-relevance") String orderBy){
+    public ResponseEntity<String> discoverGames(@RequestParam(defaultValue = "-relevance") String orderBy, @RequestParam int page){
 
         try {
-            List<Game> games = gameSvc.discoverGames(orderBy);
+            List<Game> games = gameSvc.discoverGames(orderBy, page);
             JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
     
             for(Game game : games){

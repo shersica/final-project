@@ -1,11 +1,31 @@
 .container {
-    display: flex;
-    justify-content: center; /* Horizontally center the form */
-    align-items: center; /* Vertically center the form */
-    height: 100vh; /* Adjust height as needed */
-    color: azure;
-  }
-  
+  position: relative;
+  display: flex;
+  justify-content: center; /* Horizontally center the form */
+  align-items: center; /* Vertically center the form */
+  height: 100vh; /* Adjust height as needed */
+  color: azure;
+  background-image: url('../../../assets/helldivers.png');
+  background-size: cover;
+}
+
+/* Apply translucent background color */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(21, 21, 21, 0.5); /* Adjust the RGBA values and opacity (0.5 in this case) */
+}
+
+/* Additional styling for the content inside the container */
+.container > * {
+  position: relative; /* Ensure content stays on top of the background */
+  z-index: 1; /* Place content above the background */
+}
+
   /* .form-wrapper {
     max-width: 400px; 
     width: 100%;
@@ -32,6 +52,7 @@
     margin-top: 15px; /* Add margin above the button */
     display: block; /* Make the button a block element */
     margin: 0 auto; /* Center the button horizontally */
+    width: 100%;
   }
   
 .field {
@@ -42,10 +63,20 @@
     color: azure;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
-    color: azure !important;
-  }
-  
-  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix input {
-    color: azure !important;
-  }
+:host {
+  --mdc-outlined-text-field-outline-color: white;
+  --mdc-outlined-text-field-input-text-color: white;
+}
+
+/* :host ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: white
+} */
+
+/* :host ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: white
+} */
+
+
+

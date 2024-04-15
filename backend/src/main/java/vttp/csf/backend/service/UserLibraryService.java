@@ -38,4 +38,7 @@ public class UserLibraryService {
     }
 
 
+    public void deleteFromUserLibraryById(String id){
+        userLibraryRepo.deleteFromUserLibraryById(id);
+    }
 }

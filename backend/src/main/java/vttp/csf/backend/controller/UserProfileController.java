@@ -33,14 +33,16 @@ public class UserProfileController {
     
     @PostMapping(path = "/user/profile/save")
     @ResponseBody
-    public ResponseEntity<String> saveProfile(@RequestPart MultipartFile picture, @RequestPart String name, @RequestPart String bio, @RequestPart String username ){
+    public ResponseEntity<String> saveProfile(@RequestPart MultipartFile picture, @RequestPart String name, @RequestPart String bio, @RequestPart String username, @RequestPart String id ){
 
         System.out.println("Picture: " + picture);
         System.out.println("Name: " + name);
         System.out.println("Bio: " + bio);
-        System.out.println("Username: " + username);
+        System.out.println("Username: " + username);        
+        System.out.println("Id: " + id);
 
-        userProfileSvc.saveProfile(picture, name, bio, username);
+
+        userProfileSvc.saveProfile(picture, name, bio, username, id);
 
         JsonObject success = Json.createObjectBuilder()
         .add("success", "User profile saved")

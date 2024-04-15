@@ -1,33 +1,78 @@
 
-<div>
-    <div *ngIf="(gameSub$ | async) as game">
-        <h2>{{game.name}}</h2>
+<div class="container"  [style.background-image]="'url(' + backgroundImg + ')'"> 
+    <div class="game-content game-container" *ngIf="(gameSub$ | async) as game">
+        <h1>{{game.name}}</h1>
         <img [src]="game.backgroundImage" alt="" width="200">
-        <img [src]="game.images[0]" alt="" width="200">
-        <p>Description; {{game.description}}</p>
-        <div *ngFor="let platform of game.platforms">
-            <span>{{platform}}</span>
+        <img [src]="game.images[0]" alt="" width="400">
+        <div class="button-container">
+            <div *ngIf="!gameInLibrary; else removeFromLibraryButton">
+                <button mat-raised-button (click)="addToLibrary(game)">Add to My Games </button>
+            </div>
+            <div *ngIf="!hasReviewed">
+                <button mat-raised-button (click)="reviewGame(game.gameId)">Write a Review</button>
+            </div>
+            <div *ngIf="hasReviewed">
+                <button mat-raised-button (click)="editReview(game.gameId, user?.username)">Edit Review</button>
+            </div>
         </div>
+        <div class="description">
+            <h2>About</h2>
+            <p>{{game.description}}</p>
+        </div>
+
+
+
+        <div class="btm-container">
+            <div class="info-container">
+                <div class="platform-container">
+                    <h3 class="title">Platforms</h3>
+                    <div *ngFor="let platform of game.platforms">
+                        <p>{{platform}}</p>
+                    </div>
+                </div>
+                <div class="release-date-container">
+                    <h3 class="title">Release Date</h3>
+                    <p>{{game.releaseDate}}</p>
+                </div>
+                <div class="genre-container">
+                    <h3 class="title">Genres</h3>
+                    <div *ngFor="let genre of game.genres">
+                        <p>{{genre}}</p>
+                    </div>
+                </div>
+                <div class="stores-container">
+                    <h3 class="title">Stores</h3>
+                    <div *ngFor="let store of game.stores">
+                        <p>{{store}}</p>
+                    </div>
+                </div>
+                <div class="developers-container">
+                    <h3 class="title">Developers</h3>
+                    <div *ngFor="let dev of game.developers">
+                        <p>{{dev}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="website-container">
+                <h3 class="title">Website</h3>
+                <a [href]="game.website">{{game.website}}</a>
+            </div>
+        </div>
+
+
         <div *ngFor="let rating of game.ratings">
             <p>{{rating.title | titlecase}}: {{rating.count}}</p>
         </div>
-        <p>Released date: {{game.releaseDate}}</p>
-        <div *ngIf="!gameInLibrary; else removeFromLibraryButton">
-            <button (click)="addToLibrary(game)">Add to My Games </button>
-        </div>
-        <button (click)="addToWishlist(game.gameId)">Add to Wishlist</button>
-        <div *ngIf="!hasReviewed">
-            <button (click)="reviewGame(game.gameId)">Write a Review</button>
-        </div>
-        <div *ngIf="hasReviewed">
-            <button (click)="editReview(game.gameId, user?.username)">Edit Review</button>
-        </div>
+        <!-- <p>Released date: {{game.releaseDate}}</p> -->
+
+        <!-- <button (click)="addToWishlist(game.gameId)">Add to Wishlist</button> -->
     </div>
 
-    <div>
-        <div *ngIf="reviews.length > 0; else noReviews">
-                <h3>Reviews</h3>
-                <table border="1">
+    <br><br>
+    <div class="review-content">
+        <div class="" *ngIf="reviews.length > 0; else noReviews">
+            <h1>Reviews</h1>
+            <table border="1">
                 <div *ngFor="let review of reviews">
                     <p>{{review.comment}}</p>
                     <p>By: {{review.reviewer}}</p>
@@ -48,9 +93,12 @@
     </div>
 </div>
 
+
+
 <ng-template #removeFromLibraryButton>
     <button (click)="removeFromLibrary(game.gameId)">Remove from My Games</button>
 </ng-template>
 <ng-template #noReviews>
-    <h3>No Reviews</h3>
+    <h1>Reviews</h1>
+    <p>No reviews yet.</p>
 </ng-template>

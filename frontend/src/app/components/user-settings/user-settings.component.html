@@ -1,4 +1,4 @@
-<h2>Edit Profile</h2>
+<!-- <h2>Edit Profile</h2>
 
 <form (submit)="processForm()" [formGroup]="form">
     <label for="photo">Photo:</label>
@@ -11,5 +11,40 @@
     <textarea name="bio" id="bio" cols="10" rows="3" formControlName="bio"></textarea>
     
     <button type="submit">Save Changes</button>
-  </form>
+  </form> -->
+
+
   
+  
+  <div class="container">
+    <div class="form">
+      <h1 class="login">Edit Profile</h1>
+      <form [formGroup]="form" (submit)="processForm()">
+        <div>
+          <!-- <img class="profilePic" [src]="profilePic" width="200" alt="Profile Picture"> -->
+            <label class="upload-button" for="photo">
+              <mat-icon>upload</mat-icon> 
+              <span>Upload Profile Picture</span> 
+              <span class="file-name" *ngIf="isFileSelected">{{ fileName }}</span>
+              <input [accept]="'image/*'" type="file" (change)="onFileSelected($event)" formControlName="photo" id="photo">
+            </label>
+        </div>
+        <div>
+          <mat-form-field class="field" appearance="outline">
+            <mat-label class="label">Name</mat-label>
+            <input  matInput type="text" formControlName="name">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="field" appearance="outline">
+            <mat-label class="label">Bio</mat-label>
+            <textarea matInput formControlName="bio" cols="3" rows="10"></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button type="submit">Save Changes</button>
+        </div>
+        <br>
+      </form>
+    </div>
+</div>

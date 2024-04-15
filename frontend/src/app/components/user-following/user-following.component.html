@@ -3,12 +3,19 @@
     <h2>{{username | titlecase}}'s Following</h2>
 
     <div class="container responsive-grid">
-        <mat-card class="example-card" *ngFor="let user of userProfiles">
-            <mat-card-header>
-                <img mat-card-avatar class="avatar" [src]="user.profilePic" alt="Photo of the Game">
-                <mat-card-title><a [routerLink]="['/user', user.username]" class="custom-link">{{ user.username }} </a></mat-card-title>
-                <mat-card-subtitle>{{user.bio}}</mat-card-subtitle>
-            </mat-card-header>
-        </mat-card>
+        <div *ngIf="userProfiles.length > 0; else noFollowing">
+            <mat-card class="example-card" *ngFor="let user of userProfiles">
+                <mat-card-header>
+                    <img mat-card-avatar class="avatar" [src]="user.profilePic" alt="Photo of the Game">
+                    <mat-card-title><a [routerLink]="['/user', user.username]" class="custom-link">{{ user.username }} </a></mat-card-title>
+                    <mat-card-subtitle>{{user.bio}}</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </div>
     </div>
 </div>
+
+<ng-template #noFollowing>
+    <p>Not following anyone yet.</p>
+    <p [routerLink]="['/user', 'testnew']" >Find Friends!</p>
+  </ng-template>

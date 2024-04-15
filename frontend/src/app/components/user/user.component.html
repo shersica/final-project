@@ -1,4 +1,5 @@
-<h2>{{username | titlecase}}'s Profile</h2>
+<div class="container">
+    <h2>{{username | titlecase}}'s Profile</h2>
 
 <img class="profilePic" [src]="profile.profilePic" width="200" alt="Profile Picture">
 <p>{{profile.bio}}</p>
@@ -20,7 +21,8 @@
 
 <mat-tab-group>
     <mat-tab class="tabs" label="Library">
-        <div *ngFor="let game of userLibrary; let i = index">
+        <br><br>
+        <!-- <div *ngFor="let game of userLibrary; let i = index">
             <p>Status: {{game.gameStatus}}</p>
             <div *ngIf="currentUser?.username == username">
                 <form [formGroup]="gameForms[i]">
@@ -45,12 +47,83 @@
             <p>Released date: {{game.releaseDate}}</p>    
             
             <button (click)="deleteFromUserLibrary(game.gameId)">Delete from Library</button>
-        </div>
+        </div> -->
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel class="expansion-panel-1" (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Uncategorized
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="responsive-grid">
+            <mat-card class="example-card" *ngFor="let game of userLibrary; let i = index">
+                <img mat-card-image [src]="game.backgroundImage" width="100%" alt="Photo of the Game">
+              <mat-card-header>
+                <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div *ngIf="currentUser?.username == username">
+                    <form [formGroup]="gameForms[i]">
+                        <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                            <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                                {{ status }}
+                            </option>
+                        </select>
+                        <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                            <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                                {{ rating }}
+                            </option>
+                        </select>
+                    </form>
+                    <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                </div>
+            </mat-card-content>
+            </mat-card>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="expansion-panel-1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Currently Playing
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>This is the primary content of the panel.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="expansion-panel-1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Completed
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>This is the primary content of the panel.</p>
+          </mat-expansion-panel >
+          <mat-expansion-panel class="expansion-panel-1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Played
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>This is the primary content of the panel.</p>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="expansion-panel-1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Not Played
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>This is the primary content of the panel.</p>
+          </mat-expansion-panel>
+          </mat-accordion>
+
     </mat-tab>
     <mat-tab label="Following" [routerLink]="['/user/following', username]"><app-user-following></app-user-following> </mat-tab>
     <mat-tab label="Followers" [routerLink]="['/user/followers', username]"><app-user-followers></app-user-followers> </mat-tab>
     <mat-tab label="Reviews" [routerLink]="['/user', username, 'reviews']"><app-user-reviews></app-user-reviews> </mat-tab>
   </mat-tab-group>
+
+
+
 
 <!-- <div>
     <a [routerLink]="['/user/following', username]">Following</a>

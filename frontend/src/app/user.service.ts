@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Observable, lastValueFrom } from "rxjs";
 import { UserLibrary } from "./models";
+import { deleteFromUserLibrary } from "./store/action";
 
 @Injectable()
 export class UserService {
@@ -17,6 +18,12 @@ export class UserService {
 
     getUserLibrary(username : string): Observable<any>{
         return this.http.get<any>(`/api/user/${username}/library`)
+    }
+
+    deleteFromUserLibrary(id : string): Observable<any>{
+        console.log('deleting from library backend', id)
+
+        return this.http.post<any>('/api/deleteFromLibrary', id)
     }
 
     //UserSocials

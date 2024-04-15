@@ -30,13 +30,15 @@ export class SubmitReviewComponent implements OnInit {
   userRating!: string 
   gameStatus!: string
   userLibrary!: UserLibrary[]
+  backgroundImg!: string
 
 
   
   ngOnInit(): void {
     this.gameSvc.getGameById(this.activatedRoute.snapshot.params['gameId'])
     .subscribe(resp => {
-      this.game = resp
+      this.game = resp 
+      this.backgroundImg = this.game.backgroundImage
       this.store.select(selectUserLibrary).subscribe(userLibrary => {
         const game : UserLibrary | undefined = userLibrary.find(g => g.gameId === this.game.gameId);
         console.log('Game found:', game);

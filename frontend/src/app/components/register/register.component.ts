@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,9 +10,12 @@ import { AuthenticationService } from '../../auth.service';
 })
 export class RegisterComponent implements OnInit {
 
+  private router = inject(Router)
   private authSvc = inject(AuthenticationService)
   private fb: FormBuilder = inject(FormBuilder)
   registerForm!: FormGroup
+  hide = true
+  hide2 = true
 
   ngOnInit(): void {
     this.registerForm = this.createForm()
@@ -43,6 +47,7 @@ export class RegisterComponent implements OnInit {
       if(resp.id != null){
         this.registerForm = this.createForm()
         alert('success')
+        this.router.navigate(['/login'])
         // const alert = document.getElementById('success-alert')
         // alert?.classList.remove('hidden')
       }

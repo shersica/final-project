@@ -35,7 +35,7 @@ export class EditReviewComponent implements OnInit {
   userLibrary!: UserLibrary[]
   gameId!: number
   currentReview! : Review
-
+  backgroundImg!: string
   
   ngOnInit(): void {
     this.username = this.activatedRoute.snapshot.params['username']
@@ -46,6 +46,7 @@ export class EditReviewComponent implements OnInit {
   
       this.gameSvc.getGameById(this.gameId).subscribe(resp => {
         this.game = resp
+        this.backgroundImg =this.game.backgroundImage
         this.store.select(selectUserLibrary).subscribe(userLibrary => {
           const game : UserLibrary | undefined = userLibrary.find(g => g.gameId === this.gameId);
           console.log('Game found:', game);

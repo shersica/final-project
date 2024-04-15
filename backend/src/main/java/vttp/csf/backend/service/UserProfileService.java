@@ -21,11 +21,14 @@ public class UserProfileService {
     @Autowired
     private UserProfileRepo userProfileRepo;
 
-    public void saveProfile(MultipartFile picture, String name, String bio, String username){
+    public void saveProfile(MultipartFile picture, String name, String bio, String username, String id){
 
         try {
             String imageUrl = s3Repo.saveToS3(username, picture.getContentType(), picture.getInputStream(), picture.getSize());
-            String id = UUID.randomUUID().toString().substring(0, 8);
+            
+            if(id.isEmpty()){
+                id = UUID.randomUUID().toString().substring(0, 8);
+            }
             UserProfile userProfile = new UserProfile(id,username, name, imageUrl, bio);
             userProfileRepo.saveUserProfile(userProfile);
 

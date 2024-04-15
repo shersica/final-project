@@ -10,6 +10,10 @@
             <option value="-released">Release Date</option>
             <option value="-rating">Average rating</option>
         </select>
+
+        <p>Page: {{page}}</p>
+        <button>Previous</button>
+        <button (click)="nextPage()">Next</button>
     </div>
     
     <!-- <div *ngFor="let game of games$ | async">
@@ -65,10 +69,6 @@
             <hr>
             <p>Released date: {{game.releaseDate | date}}</p>
           </mat-card-content>
-          <!-- <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
-          </mat-card-actions> -->
         </mat-card>
       </div>
   

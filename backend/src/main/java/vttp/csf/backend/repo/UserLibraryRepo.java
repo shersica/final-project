@@ -33,4 +33,26 @@ public class UserLibraryRepo {
 
     }
 
+    public List<Document> getUserLibraryListByStatus(String username, String status){
+
+        Query query = new Query();
+        query.addCriteria(
+            Criteria.where("username").is(username)
+                    .and("gameStatus").is(status));
+
+        List<Document> result = template.find(query, Document.class, "user_library");
+
+        return result;
+
+    }
+
+    public void deleteFromUserLibraryById(String id){
+        Query query = new Query();
+        query.addCriteria(
+            Criteria.where("_id").is(id));
+
+        template.remove(query, "user_library");
+
+    }
+
 }
