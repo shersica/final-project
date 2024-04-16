@@ -12,19 +12,7 @@ export class CacheInterceptor implements HttpInterceptor{
         if (request.method !== 'GET') {
           return next.handle(request);
         }
-    
-        // const cacheResponse = this.cacheSvc.get(request.urlWithParams);
-        // if (cacheResponse) {
-        //   return of(cacheResponse);
-        // }
-        
-        // return next.handle(request).pipe(
-        //   tap((event: HttpEvent<any>) => {
-        //     if (event.type === HttpEventType.Response) {
-        //       this.cacheSvc.put(request.urlWithParams, event);
-        //     }
-        //   })
-        // );
+
         const cacheKey = request.urlWithParams; // Use the complete URL as cache key
 
         const cacheResponse = this.cacheSvc.get(cacheKey);
@@ -41,3 +29,17 @@ export class CacheInterceptor implements HttpInterceptor{
         );
       }
 }
+
+    
+        // const cacheResponse = this.cacheSvc.get(request.urlWithParams);
+        // if (cacheResponse) {
+        //   return of(cacheResponse);
+        // }
+        
+        // return next.handle(request).pipe(
+        //   tap((event: HttpEvent<any>) => {
+        //     if (event.type === HttpEventType.Response) {
+        //       this.cacheSvc.put(request.urlWithParams, event);
+        //     }
+        //   })
+        // );

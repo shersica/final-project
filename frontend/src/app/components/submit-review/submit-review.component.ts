@@ -75,7 +75,7 @@ export class SubmitReviewComponent implements OnInit {
       console.log('Review to submit:',review)
       this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
       this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
-      this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
+      // this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
       this.reviewSvc.submitReview(review).subscribe(resp => {
         console.log(resp.success)
         this.cache.clear('/api/reviews/game/' + this.game.gameId)

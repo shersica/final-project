@@ -82,7 +82,7 @@ export class EditReviewComponent implements OnInit {
       console.log('Review to update:',review)
       this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
       this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
-      this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
+      // this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
       this.reviewSvc.updateReview(review).subscribe(resp => {
         if(resp.success){
           alert('Review Updated')
