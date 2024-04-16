@@ -48,7 +48,11 @@ export class LoginComponent implements OnInit {
       filter(isLoggedIn => !!isLoggedIn), // Filter out falsy (false) values
       first() // Take the first true value (indicating successful login)
     ).subscribe(() => {
-      this.userSvc.getUserLibrary(this.loginForm.value['username']).subscribe((resp : UserLibrary[]) => this.store.dispatch(Actions.setUserLibrary({userLibrary : resp})))
+      this.userSvc.getUserLibrary(this.loginForm.value['username']).subscribe((resp : UserLibrary[]) => {
+        console.log('getting user library on login', resp)
+        this.store.dispatch(Actions.setUserLibrary({userLibrary : resp}))
+      })
+
       this.router.navigate(['/home']);
     });  
     
