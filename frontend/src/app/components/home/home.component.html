@@ -50,7 +50,7 @@
           <!-- <br /> -->
           <mat-card-content>
             <!-- <br /> -->
-            <p>Rating: {{game.rating }}</p>
+            <p>Rating: {{game.rating === 0 ? 'N/A' : game.rating}}</p>
             <!-- <div class="platform-container">
                 <span>Platforms: </span>                   
                 <div *ngFor="let platform of game.platforms; let last = last">

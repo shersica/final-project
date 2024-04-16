@@ -121,10 +121,6 @@
     text-decoration: underline;
 }
 
-/* .btm-container {
-    height: auto;
-    align-items: center;
-} */
 
 .title {
     color: hsla(0, 0%, 100%, .2);
@@ -141,7 +137,6 @@
     background-color: rgba(0, 0, 0, .3);
     transition: transform 0.3s ease;
     width: auto
-    /* Add any other styling as needed */
 }
 
 .example-card:hover {
@@ -157,13 +152,13 @@
     text-decoration: underline;
 }
 
-.card-title {
-        height: 50px; /* Adjust the height as needed */
+/* .card-title {
+        height: 50px; 
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         flex: 1;
-}
+} */
 
 
 .card-header {
@@ -183,23 +178,72 @@
     width: 50%;
 }
 
-.like-button,
-.dislike-button {
-    align-self: flex-end; /* Align buttons to the bottom of the card */
-    color: inherit; /* Inherit text color from parent */
-}
-
-.like-button mat-icon,
-.dislike-button mat-icon {
-    vertical-align: middle; /* Align icon vertically */
-    margin-right: 4px; /* Add some space between icon and text */
-}
+.like-button mat-icon {
+    vertical-align: middle;
+    font-size: 1.2rem;
+  }
 
 .like-button {
-    color: #1976D2; /* Color for like button */
+    color: #1976D2;
 }
 
 .dislike-button {
-    color: #E53935; /* Color for dislike button */
+    color: #E53935;
+    margin-top: 4px;
 }
 
+.dislike-button mat-icon {
+    /* padding-top: 10px; */
+    vertical-align:-webkit-baseline-middle ;
+    font-size: 1.2rem;
+}
+
+.rating {
+    color: rgb(215, 221, 226);
+}
+
+.image-container {
+    display: grid; /* Use CSS grid */
+    grid-template-columns: repeat(3, minmax(200px, 1fr)); /* Automatically adjust column width */
+    gap: 10px; /* Add gap between images */
+}
+
+.image-container img {
+    width: 100%;
+    height: 110px; /* Set a fixed height for all images */
+    object-fit: cover; /* Maintain aspect ratio and cover entire container */
+}
+
+.image-wrapper {
+    cursor: pointer; /* Show pointer cursor on hover to indicate clickability */
+}
+
+.image-wrapper img {
+    transition: transform 0.3s ease; /* Add transition for smooth scaling effect */
+}
+
+.image-wrapper img.expanded {
+    transform: scale(3); /* Increase the size of the expanded image */
+
+}
+
+.bgImg {
+    cursor: pointer;
+}
+
+.card-actions {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+  }
+
+  .mat-card-content {
+    position: relative; /* Ensure the content is positioned relatively */
+  }
+
+.card-content {
+    color: darkgray;
+}
+  
+  

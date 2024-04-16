@@ -269,7 +269,7 @@
                 {
                  "height":14.117527173913,
                  "id":30,
-                 "name":"cs-degree",
+                 "name":"location",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -302,7 +302,7 @@
                 {
                  "height":10.375,
                  "id":33,
-                 "name":"resume",
+                 "name":"review",
                  "rotation":0,
                  "type":"",
                  "visible":true,

@@ -82,7 +82,7 @@ export interface LikeStats {
 }
 
 export interface UserProfile {
-    id: string
+    _id: string
     username: string
     name?: string
     bio?: string

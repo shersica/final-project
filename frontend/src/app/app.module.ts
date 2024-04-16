@@ -33,6 +33,7 @@ import { ReviewService } from './review.service';
 import { UserService } from './user.service';
 import { CacheService } from './cache.service';
 import { CacheInterceptor } from './http-interceptors/http-interceptor';
+import { ImageComponent } from './components/image/image.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CacheInterceptor } from './http-interceptors/http-interceptor';
     UserFollowersComponent,
     UserFollowingComponent,
     UserReviewsComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { updateUserLibrary } from '../../store/action';
 import { selectUser } from '../../store/selectors';
 import { selectUserLibrary } from '../../store/userlibrary.selectors';
 import { Observable } from 'rxjs';
+import { CacheService } from '../../cache.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { Observable } from 'rxjs';
 })
 export class EditReviewComponent implements OnInit {
 
+  private cache = inject(CacheService)
   private router = inject(Router)
   private userSvc = inject(UserService)
   private reviewSvc = inject(ReviewService)
@@ -66,25 +68,32 @@ export class EditReviewComponent implements OnInit {
   }
 
   updateReview(){
-    const review : Review  = {
-      id: this.currentReview.id,
-      gameId: this.currentReview.gameId,
-      rating : this.reviewForm.value['rating'],
-      reviewer: this.username,
-      comment: this.reviewForm.value['comment'],
-    }
-    console.log('Review to update:',review)
-    this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
-    this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
-    this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
-    this.reviewSvc.updateReview(review).subscribe(resp => {
-      if(resp.success){
-        alert('Review Updated')
-        this.router.navigate(['/game', this.currentReview.gameId])
-      } else {
-        alert('Failed to update')
+    if(this.reviewForm.invalid){
+      alert('Please fill in the required fields')
+    } else {
+
+      const review : Review  = {
+        id: this.currentReview.id,
+        gameId: this.currentReview.gameId,
+        rating : this.reviewForm.value['rating'],
+        reviewer: this.username,
+        comment: this.reviewForm.value['comment'],
       }
-    })
+      console.log('Review to update:',review)
+      this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
+      this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
+      this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
+      this.reviewSvc.updateReview(review).subscribe(resp => {
+        if(resp.success){
+          alert('Review Updated')
+          this.cache.clear('/api/reviews/game/' + this.game.gameId)
+          this.router.navigate(['/game', this.currentReview.gameId])
+        } else {
+          alert('Failed to update review')
+        }
+      })
+    }
+
   }
 
   deleteReview(reviewId: number | undefined){
@@ -95,7 +104,7 @@ export class EditReviewComponent implements OnInit {
         alert('Review Deleted')
         this.router.navigate(['/game', this.currentReview.gameId])
       } else {
-        alert('Failed to delete')
+        alert('Failed to deleter review')
       }
     },
     err => console.log(err.error))

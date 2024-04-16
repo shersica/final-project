@@ -23,10 +23,10 @@ export class GameService {
 
     }
 
-    discoverGames(orderBy : string, page : number): Promise<Game[]>{
+    discoverGames(orderBy : string, page : number): Observable<Game[]>{
         const params = new HttpParams()
             .set('orderBy', orderBy)
             .set('page', page)
-        return lastValueFrom(this.http.get<Game[]>('/api/games/discover', {params}))
+        return this.http.get<Game[]>('/api/games/discover', {params})
     }
 }

@@ -40,6 +40,10 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.store.dispatch(Actions.login(this.loginForm.value))
+    this.store.select(loginError).subscribe(error => {
+      if (error) {
+        alert('Login Failed');
+      }})
     this.store.select(isLoggedIn).pipe(
       filter(isLoggedIn => !!isLoggedIn), // Filter out falsy (false) values
       first() // Take the first true value (indicating successful login)
@@ -48,14 +52,5 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
     });  
     
-    // this.authSvc.login(this.loginForm.value).subscribe((resp) => {
-    //   if(resp.jwt != null){
-    //     console.log(resp.jwt)
-    //     console.log(this.loginForm.value['username'])
-    //     this.userStorage.saveUser(this.loginForm.value['username'])
-    //     this.userStorage.saveToken(resp.jwt)
-        // this.router.navigate(['/home'])
-    //   }
-    // })
   } 
 }

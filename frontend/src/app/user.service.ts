@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable, lastValueFrom } from "rxjs";
+import { Observable, lastValueFrom, timestamp } from "rxjs";
 import { UserLibrary } from "./models";
 import { deleteFromUserLibrary } from "./store/action";
 
@@ -57,6 +57,7 @@ export class UserService {
     }
 
     getUserProfile(username: any): Observable<any> {
+
         return this.http.get<any>(`/api/user/profile/${username}`)
     }
     

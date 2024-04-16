@@ -14,7 +14,17 @@ export class CacheService {
         return this.cache.get(url);
       }
     
-      clear(): void {
-        this.cache.clear();
-      }
+    //   clear(): void {
+    //     this.cache.clear();
+    //   }
+
+      clear(url?: string): void {
+        if (url) {
+            console.log('Clearing cache for URL:', url);
+            this.cache.delete(url);
+        } else {
+            console.log('Clearing entire cache');
+            this.cache.clear();
+        }
+    }
 }

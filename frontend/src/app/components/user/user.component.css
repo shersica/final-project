@@ -2,6 +2,7 @@
     border-radius: 50%;
     width: 100px; 
     height: 100px;
+    border: 2px solid lightgray;
 }
 
 .tabs {
@@ -68,14 +69,6 @@
     height: auto;
 }
 
-/* .expansion-panel-1 .mat-expansion-panel-header[aria-disabled=true]{
-    background-color: lightblue;
-}
-
-.expansion-panel-1 .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-title {
-    color: blue;
-} */
-
 .expansion-panel-1.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]){
     background-color: gray;
 }
@@ -138,15 +131,55 @@
 
 .profile-container {
     display: flex;
-    align-items: center; /* Align items vertically */
+    align-items: center; 
     padding-bottom: 40px;
 }
 
 .profile-info {
-    margin-left: 20px; /* Adjust margin between the image and text */
+    margin-left: 20px;
     flex: 1;
 }
 
 .user-button {
-    margin-left: 10px; /* Adjust margin between the profile info and button */
+    margin-left: 10px;
 }
+
+:host {
+    --mdc-outlined-text-field-outline-color: white;
+    --mdc-outlined-text-field-input-text-color: white;
+    --mat-select-enabled-arrow-color: white;
+    --mat-select-enabled-trigger-text-color:white;
+    --mat-select-panel-background-color: #202020;
+    --mat-select-disabled-trigger-text-color: white;
+    --mat-select-placeholder-text-color:white;
+}
+  
+  
+  .select-wrapper{
+    border-radius: 10px;
+    background-color: #202020;
+    padding: 10px;
+    width: 200px;
+    color: azure;
+    margin-bottom: 16px; /* Add margin between select dropdowns */
+
+  }
+
+  .mat-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Align items vertically in the center */
+    align-items: center; /* Align items horizontally in the center */
+  }
+  
+  button {
+    margin-top: 16px; /* Add margin above the button */
+  }
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Align items vertically in the center */
+    align-items: center; /* Align items horizontally in the center */
+  }
+  

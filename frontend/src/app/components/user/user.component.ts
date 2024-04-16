@@ -1,12 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Game, User, UserLibrary, UserProfile, UserSocials } from '../../models';
 import { Store, select } from '@ngrx/store';
 import { selectUserLibrary } from '../../store/userlibrary.selectors';
 import { GameService } from '../../game.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { addToFollowing, deleteFromUserLibrary, updateUserLibrary } from '../../store/action';
-import { selectUser } from '../../store/selectors';
+import { isLoggedIn, selectUser } from '../../store/selectors';
 import { UserService } from '../../user.service';
 import * as Actions from '../../store/action'
 
@@ -18,6 +18,7 @@ import * as Actions from '../../store/action'
 })
 export class UserComponent implements OnInit {
 
+  private router =inject(Router)
   private userSvc = inject(UserService)
   private fb: FormBuilder = inject(FormBuilder)
   private gameSvc = inject(GameService)
@@ -28,7 +29,7 @@ export class UserComponent implements OnInit {
   userLibrary!: UserLibrary[]
   gameStatusTypes = ['Uncategorized', 'Currently Playing', 'Completed', 'Played', 'Not Played']
   currentUser! : User | null
-  gameForms: FormGroup[] = [];
+  // gameForms1: FormGroup[] = [];
   ratingTypes = ['Not Yet Rated','Exceptional', 'Recommend', 'Meh', 'Skip']
   following : string[] = []
   profile!: UserProfile
@@ -39,6 +40,8 @@ export class UserComponent implements OnInit {
   completed!: UserLibrary[]
   notPlayed!: UserLibrary[]
   played!: UserLibrary[]
+  isLoggedIn = false
+  gameForms: Map<number, FormGroup> = new Map();
 
 
   ngOnInit(): void {
@@ -46,6 +49,9 @@ export class UserComponent implements OnInit {
       this.username = params['username'];
       this.store.pipe(select(selectUser)).subscribe(user => {
         this.currentUser = user;
+        if(this.currentUser !== null){
+          this.isLoggedIn = true
+        }
       });
 
       //if is current user's library -> selectUserLibrary -> push to form
@@ -55,17 +61,16 @@ export class UserComponent implements OnInit {
           console.log('current user userlibrary:',userLibrary);
           this.userLibrary.forEach(game => {
             const form = this.createForm(game.gameStatus, game.userRating);
-            this.gameForms.push(form);
+            this.gameForms.set(game.gameId, form);
           })
           this.sortLibrary(this.userLibrary)
         });
       } else {
         //Get UL -> DIsplay 
         this.userSvc.getUserLibrary(this.username).subscribe((resp: UserLibrary[]) => {
-          // this.store.dispatch(Actions.setUserLibrary({ userLibrary: resp }));
           resp.forEach(game => {
             const form = this.createForm(game.gameStatus, game.userRating);
-            this.gameForms.push(form);
+            this.gameForms.set(game.gameId, form);
           });
  
           this.userLibrary = resp;
@@ -74,16 +79,28 @@ export class UserComponent implements OnInit {
       }
 
       //Get User Profile
-      this.userSvc.getUserProfile(this.username).subscribe(resp => this.profile = resp )
+      this.userSvc.getUserProfile(this.username).subscribe((resp:UserProfile) => {
+        this.profile = resp 
+        if(this.profile.profilePic !== 'https://pbs.twimg.com/media/FzEjZL4aYAU4Vzj.jpg'){
+          this.profile.profilePic = this.updatedPic(this.profile.profilePic)
+        }
+      })
+
+      //Check if currentuser is following user
+      this.userSvc.getUserSocials(this.currentUser?.username).subscribe((resp: UserSocials) => {
+        const followingList: string[] = resp.following;
+        this.isFollowing = followingList.includes(this.username);
+      })
     });
 
-    //Check if currentuser is following user
-    this.userSvc.getUserSocials(this.currentUser?.username).subscribe((resp: UserSocials) => {
-      const followingList: string[] = resp.following;
-      this.isFollowing = followingList.includes(this.username);
-    })
+
   }
   
+  updatedPic(url: string): string {
+    const timestamp = new Date().getTime();
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}timestamp=${timestamp}`;
+  }
 
   createForm(initialStatus: string, initialRating: string): FormGroup {
     return this.fb.group({
@@ -93,8 +110,9 @@ export class UserComponent implements OnInit {
   }
 
   updateUserLibrary(gameId : number, index : number){
-    const status = this.gameForms[index].value['gameStatus'];
-    const rating = this.gameForms[index].value['userRating'];
+    const status = this.gameForms.get(gameId)?.value['gameStatus']
+    const rating = this.gameForms.get(gameId)?.value['userRating'];
+    console.log('updating:', status, rating)
     this.store.dispatch(updateUserLibrary({gameId : gameId , gameStatus : status, userRating : rating}))
     console.log('updating user library:', this.userLibrary)
     this.store.pipe(select(selectUserLibrary)).subscribe(userLibrary => {
@@ -113,18 +131,28 @@ export class UserComponent implements OnInit {
   }
 
   followUser(usernameToFollow : string, currentUser : any){
-    this.userSvc.followUser(usernameToFollow, currentUser).then(resp => { 
-      console.log(resp.success)
-      this.isFollowing = true
-    });
+    if(this.isLoggedIn){
+      this.userSvc.followUser(usernameToFollow, currentUser).then(resp => { 
+        console.log(resp.success)
+        this.isFollowing = true
+      });
+    } else {
+      this.router.navigate(['/login'])
+    }
+
     
   }
 
   unfollowUser(usernameToUnfollow : string, currentUser : any){
-    this.userSvc.unfollowUser(usernameToUnfollow, currentUser).then(resp => {
-      console.log(resp.success)
-      this.isFollowing = false
-    });
+    if(this.isLoggedIn){
+      this.userSvc.unfollowUser(usernameToUnfollow, currentUser).then(resp => {
+        console.log(resp.success)
+        this.isFollowing = false
+      });
+    } else {
+      this.router.navigate(['/login'])
+    }
+
   }
 
   sortLibrary(userLibrary: UserLibrary[]){
@@ -168,5 +196,7 @@ export class UserComponent implements OnInit {
     });
 
   }
+
+
 
 }

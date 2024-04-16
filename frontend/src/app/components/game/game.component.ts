@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { GameService } from '../../game.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameDetails, LikeStats, Review, ReviewInteractions, User, UserLibrary } from '../../models';
+import { GameDetails, LikeStats, Rating, Review, ReviewInteractions, User, UserLibrary } from '../../models';
 import { Store } from '@ngrx/store';
 import { isLoggedIn, selectUser } from '../../store/selectors';
 import { addToUserLibrary, deleteFromUserLibrary } from '../../store/action';
@@ -9,6 +9,8 @@ import { UserService } from '../../user.service';
 import { isGameInLibrary, selectUserLibrary } from '../../store/userlibrary.selectors';
 import { Observable, map } from 'rxjs';
 import { ReviewService } from '../../review.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageComponent } from '../image/image.component';
 
 @Component({
   selector: 'app-game',
@@ -16,7 +18,7 @@ import { ReviewService } from '../../review.service';
   styleUrl: './game.component.css'
 })
 export class GameComponent implements OnInit {
-
+  private dialog = inject(MatDialog)
   private reviewSvc = inject(ReviewService)
   private userSvc = inject(UserService)
   private store = inject(Store)
@@ -35,13 +37,26 @@ export class GameComponent implements OnInit {
   reviewInteraction!: ReviewInteractions
   likeStats!: LikeStats[]
   backgroundImg! : string
+  highestRating: Rating = {
+    title: '',
+    count: 0,
+    percent: 0
+  }
+  
+  
 
   ngOnInit(): void {
     this.gameId = parseInt(this.activatedRoute.snapshot.params['gameId'], 10);
     this.gameSub$ = this.gameSvc.getGameById(this.activatedRoute.snapshot.params['gameId'])
     this.gameSvc.getGameById(this.activatedRoute.snapshot.params['gameId']).subscribe((resp: GameDetails) => {
       this.backgroundImg = resp.backgroundImage
-      console.log("image:", this.backgroundImg)
+      this.game = resp
+      this.game.ratings.forEach((rating: Rating)=> {
+        if(rating.count > this.highestRating.count){
+          console.log('rating count', rating.count)
+          this.highestRating = rating
+        }
+      })
     })
     this.store.select(isLoggedIn).subscribe(resp => {
       this.isLoggedIn = resp
@@ -59,6 +74,7 @@ export class GameComponent implements OnInit {
     //Get review interactions 
     this.reviewSvc.getReviewsByGameId(this.gameId).subscribe(resp => { 
       this.reviews = resp
+      console.log('reviews', this.reviews)
       this.reviews.forEach(review => {
         this.reviewSvc.getReviewInteractionsByReviewId(review.id).subscribe(interactions => {
           review.interactions = interactions
@@ -258,6 +274,18 @@ export class GameComponent implements OnInit {
     } else {
       this.router.navigate(['/login'])
     }
+  }
+
+  expandedImage: string | null = null;
+
+  toggleImageSize(image: string) {
+      this.expandedImage = this.expandedImage === image ? null : image;
+  }
+
+  openImageDialog(image: string): void {
+    this.dialog.open(ImageComponent, {
+      data: { image: image }
+    });
   }
 
 

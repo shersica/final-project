@@ -43,21 +43,25 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.value['email'],
       password: this.registerForm.value['password']
     }
-    this.authSvc.register(user).subscribe((resp) => {
-      if(resp.id != null){
-        this.registerForm = this.createForm()
-        alert('success')
-        this.router.navigate(['/login'])
-        // const alert = document.getElementById('success-alert')
-        // alert?.classList.remove('hidden')
-      }
-    },
-    (error) => {
-      if (error.status === 400) {
-        alert('Username already exists');
-      } else {
-        alert('An error occurred. Please try again later.');
-      }
-    })
+    if(this.registerForm.valid){
+      this.authSvc.register(user).subscribe((resp) => {
+        console.log('resp id', resp.id)
+        if(resp.id !== null){
+          this.registerForm = this.createForm()
+          alert('Registration success. An email has been sent')
+          this.router.navigate(['/login'])
+        }
+      },
+      (error) => {
+        if (error.status === 400) {
+          alert('Username already exists');
+        } else {
+          alert('An error occurred. Please try again later.');
+        }
+      })
+    } else {
+      alert('Please fill in all the required fields correctly')
+    }
+
   }
 }

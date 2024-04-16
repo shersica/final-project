@@ -18,15 +18,4 @@ export class UserLibraryEffects {
         private userSvc : UserService
     ) {}
 
-    // saveUserLibraryOnLogout$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(AuthActions.logout),
-    //         withLatestFrom(this.store.select(selectUserLibrary)),
-    //         exhaustMap(([action, userLibrary]) =>
-    //             this.userSvc.saveUserLibrary(userLibrary).pipe(
-    //                 catchError(error => of(UserLibraryActions.saveUserLibraryFailure({ error })))
-    //             )
-    //         )
-    // ));
-
 }

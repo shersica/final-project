@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, timestamp } from "rxjs";
 import { LikeStats, Review, ReviewInteractions } from "./models";
 
 @Injectable()
@@ -26,6 +26,7 @@ export class ReviewService {
     }
 
     getReviewsByGameId(gameId : number): Observable<any> {
+
         return this.http.get<any>(`/api/reviews/game/${gameId}`)
     }
 

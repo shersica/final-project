@@ -2,8 +2,13 @@
 <div class="container"  [style.background-image]="'url(' + backgroundImg + ')'"> 
     <div class="game-content game-container" *ngIf="(gameSub$ | async) as game">
         <h1>{{game.name}}</h1>
-        <img [src]="game.backgroundImage" alt="" width="200">
-        <img [src]="game.images[0]" alt="" width="400">
+        <h3 class="rating">{{highestRating.title | titlecase}}</h3>
+        <div class="image-container">
+            <img [src]="game.backgroundImage" alt="" width="200"  (click)="openImageDialog(game.backgroundImage)" class="bgImg">
+            <div class="image-wrapper" *ngFor="let image of game.images.slice(0,5)" (click)="openImageDialog(image)">
+                <img [src]="image" alt="" width="200">
+            </div>
+        </div>
         <div class="button-container">
             <div *ngIf="!gameInLibrary; else removeFromLibraryButton">
                 <button mat-raised-button (click)="addToLibrary(game)">Add to My Games </button>
@@ -33,7 +38,7 @@
                 </div>
                 <div class="release-date-container">
                     <h3 class="title">Release Date</h3>
-                    <p>{{game.releaseDate}}</p>
+                    <p>{{game.releaseDate == 'TBA' ? game.releaseDate : game.releaseDate | date}}</p>
                 </div>
                 <div class="genre-container">
                     <h3 class="title"><span>Genres </span></h3>
@@ -64,7 +69,7 @@
                 </div>
                 <div class="website-container">
                     <h3 class="title">Website</h3>
-                    <a [href]="game.website">{{game.website}}</a>
+                    <a [href]="game.website">{{ game.website ? game.website : 'N/A' }}</a>
                 </div>
             </div>
         </div>
@@ -74,32 +79,10 @@
             <p>{{rating.title | titlecase}}: {{rating.count}}</p>
         </div> -->
 
-        <!-- <button (click)="addToWishlist(game.gameId)">Add to Wishlist</button> -->
     </div>
 
-    <br><br>
-    <!-- <div class="review-content">
-        <div class="" *ngIf="reviews.length > 0; else noReviews">
-            <h1>Reviews</h1>
-            <table border="1">
-                <div *ngFor="let review of reviews">
-                    <p>{{review.comment}}</p>
-                    <p>By: {{review.reviewer}}</p>
-                    <p>Posted on {{review.date}}</p>
-                    <p>Likes: {{ review.interactions?.likes }}</p>
-                    <p>Dislikes: {{ review.interactions?.dislikes }}</p>
-                    <div *ngIf="review.likeStats?.liked">
-                        <p>You liked this review</p>
-                    </div>
-                    <button (click)="like(review.id, review.likeStats)">Like</button>
-                    <div *ngIf="review.likeStats?.disliked">
-                        <p>You disliked this review</p>
-                    </div>
-                    <button (click)="dislike(review.id, review.likeStats)">Dislike</button>
-                </div>
-            </table>
-        </div>
-    </div> -->
+    <br><br><br><br>
+
     <div class="review-container">
         <div class="" *ngIf="reviews.length > 0; else noReviews">
             <h1 class="review-content">Reviews</h1>
@@ -108,7 +91,6 @@
                 <mat-card class="example-card" *ngFor="let review of reviews">
                     <mat-card-header class="card-header">
                         <mat-card-title>{{review.rating}}</mat-card-title>
-                        <!-- <mat-card-subtitle class="subtitle">{{review.rating}}</mat-card-subtitle> -->
                     </mat-card-header>
                     <br>
                     <mat-card-content class="mat-card-content">
@@ -118,8 +100,22 @@
                         <p class="card-content">Posted on {{review.date | date}}</p>
                     </mat-card-content>
                     <mat-card-actions class="card-actions">
-                        <button mat-button class="like-button">{{review.interactions?.likes}}<mat-icon color="primary">thumb_up</mat-icon></button>
-                        <button mat-button class="dislike-button">{{review.interactions?.dislikes}} <mat-icon color="warn">thumb_down</mat-icon></button>
+                        <button mat-button class="like-button" (click)="like(review.id, review.likeStats)">
+                            <ng-container *ngIf="review.likeStats?.liked; else likeButton">
+                              <mat-icon color="primary">thumb_up</mat-icon> Unlike {{ review.interactions?.likes }}
+                            </ng-container>
+                            <ng-template #likeButton>
+                              <mat-icon color="primary">thumb_up</mat-icon> Like {{ review.interactions?.likes }}
+                            </ng-template>
+                          </button>
+                          <button mat-button class="dislike-button" (click)="dislike(review.id, review.likeStats)">
+                            <ng-container *ngIf="review.likeStats?.disliked; else dislikeButton">
+                              <mat-icon color="warn">thumb_down</mat-icon> Remove Dislike {{ review.interactions?.dislikes }}
+                            </ng-container>
+                            <ng-template #dislikeButton>
+                              <mat-icon color="warn">thumb_down</mat-icon> Dislike {{ review.interactions?.dislikes }}
+                            </ng-template>
+                          </button>
                     </mat-card-actions>
                 </mat-card>
             </div>

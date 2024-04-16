@@ -9,6 +9,7 @@ import { selectUserLibrary } from '../../store/userlibrary.selectors';
 import { ReviewService } from '../../review.service';
 import { updateUserLibrary, updateUserRating } from '../../store/action';
 import { UserService } from '../../user.service';
+import { CacheService } from '../../cache.service';
 
 @Component({
   selector: 'app-submit-review',
@@ -17,6 +18,7 @@ import { UserService } from '../../user.service';
 })
 export class SubmitReviewComponent implements OnInit {
 
+  private cache = inject(CacheService)
   private router = inject(Router)
   private userSvc = inject(UserService)
   private reviewSvc = inject(ReviewService)
@@ -60,20 +62,27 @@ export class SubmitReviewComponent implements OnInit {
   }
 
   submitReview(){
-    const review : Review  = {
-      gameId: this.game.gameId,
-      rating : this.reviewForm.value['rating'],
-      reviewer: this.currentUser?.username ?? '',
-      comment: this.reviewForm.value['comment'],
+    if(this.reviewForm.invalid){
+      alert('Please fill in the required fields')
+    } else {
+
+      const review : Review  = {
+        gameId: this.game.gameId,
+        rating : this.reviewForm.value['rating'],
+        reviewer: this.currentUser?.username ?? '',
+        comment: this.reviewForm.value['comment'],
+      }
+      console.log('Review to submit:',review)
+      this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
+      this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
+      this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
+      this.reviewSvc.submitReview(review).subscribe(resp => {
+        console.log(resp.success)
+        this.cache.clear('/api/reviews/game/' + this.game.gameId)
+        this.router.navigate(['/game', this.game.gameId])
+      })
     }
-    console.log('Review to submit:',review)
-    this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
-    this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
-    this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
-    this.reviewSvc.submitReview(review).subscribe(resp => {
-      console.log(resp.success)
-      this.router.navigate(['/game', this.game.gameId])
-    })
+
   }
 
 }

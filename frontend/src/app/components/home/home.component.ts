@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Filter, Game } from '../../models';
 import { GameService } from '../../game.service';
 import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { FormControl } from '@angular/forms';
 export class HomeComponent implements OnInit {
 
   private gameSvc = inject(GameService)
-  games$!: Promise<Game[]>
+  games$!: Observable<Game[]>
   orderByControl = new FormControl('-relevance'); // Default orderBy option
   page = 1
   filters: Filter[] = [

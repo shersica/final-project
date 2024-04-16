@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfile } from '../../models';
+import { CacheService } from '../../cache.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -14,6 +15,7 @@ export class UserSettingsComponent implements OnInit {
   @ViewChild('photo')
   photo!: ElementRef;
 
+  private cache = inject(CacheService)
   private router = inject(Router)
   private activatedRoute = inject(ActivatedRoute)
   private userSvc = inject(UserService)
@@ -27,9 +29,10 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.activatedRoute.snapshot.params['username']
-    this.userSvc.getUserProfile(this.username).subscribe(resp =>{
+    this.userSvc.getUserProfile(this.username).subscribe((resp: UserProfile) =>{
       this.currentUserProfile = resp
-      this.profilePic = this.currentUserProfile.profilePic
+      this.profilePic = this.currentUserProfile.profilePic;
+      console.log('profile pic',this.currentUserProfile.profilePic)
     })
     this.form = this.createForm()
   }
@@ -43,21 +46,30 @@ export class UserSettingsComponent implements OnInit {
   }
 
   processForm(){
+    if(this.form.invalid){
+      alert('Please fill in the required fields')
+    } else {
+      
       const formData = new FormData()
       formData.set('picture', this.photo.nativeElement.files[0])
       formData.set('name', this.form.value.name)
       formData.set('bio', this.form.value.bio)
       formData.set('username', this.username )
-      formData.set('id', this.currentUserProfile.id)
+      formData.set('id', this.currentUserProfile._id)
       console.log('saving form data: ', formData)
       this.userSvc.saveProfile(formData)
         .then((response: any) => {
           console.log(response.success)
+          this.cache.clear('/api/user/profile/' + this.username)
+          alert('Profile Updated.')
           this.router.navigate(['/user', this.username])
         })
         .catch((err) => {
           console.log(err)
         })
+
+    }
+
   }
 
 
@@ -72,4 +84,6 @@ export class UserSettingsComponent implements OnInit {
       this.fileName = '';
     }
   }
+
+
 }

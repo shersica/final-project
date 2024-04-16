@@ -13,7 +13,21 @@ export class CacheInterceptor implements HttpInterceptor{
           return next.handle(request);
         }
     
-        const cacheResponse = this.cacheSvc.get(request.urlWithParams);
+        // const cacheResponse = this.cacheSvc.get(request.urlWithParams);
+        // if (cacheResponse) {
+        //   return of(cacheResponse);
+        // }
+        
+        // return next.handle(request).pipe(
+        //   tap((event: HttpEvent<any>) => {
+        //     if (event.type === HttpEventType.Response) {
+        //       this.cacheSvc.put(request.urlWithParams, event);
+        //     }
+        //   })
+        // );
+        const cacheKey = request.urlWithParams; // Use the complete URL as cache key
+
+        const cacheResponse = this.cacheSvc.get(cacheKey);
         if (cacheResponse) {
           return of(cacheResponse);
         }
@@ -21,7 +35,7 @@ export class CacheInterceptor implements HttpInterceptor{
         return next.handle(request).pipe(
           tap((event: HttpEvent<any>) => {
             if (event.type === HttpEventType.Response) {
-              this.cacheSvc.put(request.urlWithParams, event);
+              this.cacheSvc.put(cacheKey, event); // Cache the response with complete URL as key
             }
           })
         );

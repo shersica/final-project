@@ -26,7 +26,7 @@
               <mat-icon>upload</mat-icon> 
               <span>Upload Profile Picture</span> 
               <span class="file-name" *ngIf="isFileSelected">{{ fileName }}</span>
-              <input [accept]="'image/*'" type="file" (change)="onFileSelected($event)" formControlName="photo" id="photo">
+              <input [accept]="'image/*'" type="file" (change)="onFileSelected($event)" formControlName="photo" id="photo" #photo>
             </label>
         </div>
         <div>

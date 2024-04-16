@@ -1,12 +1,9 @@
 <div class="container">
-    <!-- <h2>{{username | titlecase}}'s Profile</h2>
-
-<img class="profilePic" [src]="profile.profilePic" width="200" alt="Profile Picture">
-<p>{{profile.bio}}</p> -->
 <div class="profile-container">
     <img class="profilePic" [src]="profile.profilePic" width="200" alt="Profile Picture">
     <div class="profile-info">
         <h2>{{username | titlecase}}'s Profile</h2>
+        <!-- <p>{{profile.name}}</p> -->
         <p>{{profile.bio}}</p>
     <div *ngIf="currentUser?.username !== username; else isCurrentUser">
         <div *ngIf="isFollowing; else follow">
@@ -45,21 +42,30 @@
               <mat-card-header>
                 <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
               </mat-card-header>
-              <mat-card-content>
+              <br>
+              <mat-card-content class="mat-card-content">
                 <div *ngIf="currentUser?.username == username">
-                    <form [formGroup]="gameForms[i]">
-                        <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                            <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                                {{ status }}
-                            </option>
-                        </select>
-                        <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                            <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                                {{ rating }}
-                            </option>
-                        </select>
+                    <form [formGroup]="gameForms.get(game.gameId)!">
+                        <div class="select-wrapper">
+                            <mat-select [(value)]="game.gameStatus" formControlName="gameStatus" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                <mat-option></mat-option>
+                                @for (status of gameStatusTypes; track status) {
+                                  <mat-option [value]="status">{{ status }}</mat-option>
+                                }
+                            </mat-select>    
+                        </div>
+                        <div class="select-wrapper">
+                            <mat-select placeholder="Rating" [(value)]="game.userRating" formControlName="userRating" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                <mat-option></mat-option>
+                                @for (rating of ratingTypes; track rating) {
+                                  <mat-option [value]="rating">{{ rating }}</mat-option>
+                                }
+                            </mat-select>    
+                        </div>
                     </form>
-                    <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                    <div class="button-wrapper">
+                        <button class="delete-btn" mat-raised-button (click)="deleteFromUserLibrary(game._id, game.gameId)"><mat-icon color="warn">delete</mat-icon> Delete from Library</button>
+                    </div>
                 </div>
             </mat-card-content>
             </mat-card>
@@ -77,21 +83,30 @@
                   <mat-card-header>
                     <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
                   </mat-card-header>
-                  <mat-card-content>
+                  <br>
+                  <mat-card-content class="mat-card-content">
                     <div *ngIf="currentUser?.username == username">
-                        <form [formGroup]="gameForms[i]">
-                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                                    {{ status }}
-                                </option>
-                            </select>
-                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                                    {{ rating }}
-                                </option>
-                            </select>
+                        <form [formGroup]="gameForms.get(game.gameId)!">
+                            <div class="select-wrapper">
+                                <mat-select [(value)]="game.gameStatus" formControlName="gameStatus" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (status of gameStatusTypes; track status) {
+                                      <mat-option [value]="status">{{ status }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
+                            <div class="select-wrapper">
+                                <mat-select placeholder="Rating" [(value)]="game.userRating" formControlName="userRating" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (rating of ratingTypes; track rating) {
+                                      <mat-option [value]="rating">{{ rating }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
                         </form>
-                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                        <div class="button-wrapper">
+                            <button class="delete-btn" mat-raised-button (click)="deleteFromUserLibrary(game._id, game.gameId)"><mat-icon color="warn">delete</mat-icon> Delete from Library</button>
+                        </div>
                     </div>
                 </mat-card-content>
                 </mat-card>
@@ -109,21 +124,30 @@
                   <mat-card-header>
                     <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
                   </mat-card-header>
-                  <mat-card-content>
+                  <br>
+                  <mat-card-content class="mat-card-content">
                     <div *ngIf="currentUser?.username == username">
-                        <form [formGroup]="gameForms[i]">
-                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                                    {{ status }}
-                                </option>
-                            </select>
-                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                                    {{ rating }}
-                                </option>
-                            </select>
+                        <form [formGroup]="gameForms.get(game.gameId)!">
+                            <div class="select-wrapper">
+                                <mat-select [(value)]="game.gameStatus" formControlName="gameStatus" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (status of gameStatusTypes; track status) {
+                                      <mat-option [value]="status">{{ status }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
+                            <div class="select-wrapper">
+                                <mat-select placeholder="Rating" [(value)]="game.userRating" formControlName="userRating" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (rating of ratingTypes; track rating) {
+                                      <mat-option [value]="rating">{{ rating }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
                         </form>
-                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                        <div class="button-wrapper">
+                            <button class="delete-btn" mat-raised-button (click)="deleteFromUserLibrary(game._id, game.gameId)"><mat-icon color="warn">delete</mat-icon> Delete from Library</button>
+                        </div>
                     </div>
                 </mat-card-content>
                 </mat-card>
@@ -141,21 +165,30 @@
                   <mat-card-header>
                     <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
                   </mat-card-header>
-                  <mat-card-content>
+                  <br>
+                  <mat-card-content class="mat-card-content">
                     <div *ngIf="currentUser?.username == username">
-                        <form [formGroup]="gameForms[i]">
-                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                                    {{ status }}
-                                </option>
-                            </select>
-                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                                    {{ rating }}
-                                </option>
-                            </select>
+                        <form [formGroup]="gameForms.get(game.gameId)!">
+                            <div class="select-wrapper">
+                                <mat-select [(value)]="game.gameStatus" formControlName="gameStatus" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (status of gameStatusTypes; track status) {
+                                      <mat-option [value]="status">{{ status }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
+                            <div class="select-wrapper">
+                                <mat-select placeholder="Rating" [(value)]="game.userRating" formControlName="userRating" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (rating of ratingTypes; track rating) {
+                                      <mat-option [value]="rating">{{ rating }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
                         </form>
-                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                        <div class="button-wrapper">
+                            <button class="delete-btn" mat-raised-button (click)="deleteFromUserLibrary(game._id, game.gameId)"><mat-icon color="warn">delete</mat-icon> Delete from Library</button>
+                        </div>
                     </div>
                 </mat-card-content>
                 </mat-card>
@@ -173,21 +206,30 @@
                   <mat-card-header>
                     <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
                   </mat-card-header>
-                  <mat-card-content>
+                  <br>
+                  <mat-card-content class="mat-card-content">
                     <div *ngIf="currentUser?.username == username">
-                        <form [formGroup]="gameForms[i]">
-                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                                    {{ status }}
-                                </option>
-                            </select>
-                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                                    {{ rating }}
-                                </option>
-                            </select>
+                        <form [formGroup]="gameForms.get(game.gameId)!">
+                            <div class="select-wrapper">
+                                <mat-select [(value)]="game.gameStatus" formControlName="gameStatus" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (status of gameStatusTypes; track status) {
+                                      <mat-option [value]="status">{{ status }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
+                            <div class="select-wrapper">
+                                <mat-select placeholder="Rating" [(value)]="game.userRating" formControlName="userRating" (selectionChange)="updateUserLibrary(game.gameId, i)">
+                                    <mat-option></mat-option>
+                                    @for (rating of ratingTypes; track rating) {
+                                      <mat-option [value]="rating">{{ rating }}</mat-option>
+                                    }
+                                </mat-select>    
+                            </div>
                         </form>
-                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                        <div class="button-wrapper">
+                            <button class="delete-btn" mat-raised-button (click)="deleteFromUserLibrary(game._id, game.gameId)"><mat-icon color="warn">delete</mat-icon> Delete from Library</button>
+                        </div>
                     </div>
                 </mat-card-content>
                 </mat-card>
@@ -202,28 +244,14 @@
   </mat-tab-group>
 
 
+                          <!-- <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                            <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                                {{ status }}
+                            </option>
+                        </select> -->
 
-
-<!-- <div>
-    <a [routerLink]="['/user/following', username]">Following</a>
-    <a [routerLink]="['/user/followers', username]">Followers</a>
-    <a [routerLink]="['/user', username, 'reviews']">Reviews</a>
-</div>
-
-<div>
-    <h3>Game Platforms</h3>
-</div>
-
-<div>
-    <h3>Favourite games</h3>
-
-    <div *ngFor="let game of favGames">
-        <p>{{game.name}}</p>
-    </div>
-</div>
-
-<div>
-    <h3>Library</h3>
-
-
-</div> -->
+                                                <!-- <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                            <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                                {{ rating }}
+                            </option>
+                        </select> -->

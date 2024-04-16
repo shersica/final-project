@@ -78,5 +78,12 @@
     border-color: white
 } */
 
+.register {
+  text-decoration: none;
+}
+
+.register:hover {
+  text-decoration: underline;
+}
 
 
