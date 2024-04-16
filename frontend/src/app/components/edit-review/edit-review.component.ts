@@ -8,7 +8,7 @@ import { GameService } from '../../game.service';
 import { GameDetails, Review, User, UserLibrary } from '../../models';
 import { updateUserLibrary } from '../../store/action';
 import { selectUser } from '../../store/selectors';
-import { selectUserLibrary } from '../../store/userlibrary.selectors';
+import { isGameInLibrary, selectUserLibrary } from '../../store/userlibrary.selectors';
 import { Observable } from 'rxjs';
 import { CacheService } from '../../cache.service';
 
@@ -49,10 +49,12 @@ export class EditReviewComponent implements OnInit {
       this.gameSvc.getGameById(this.gameId).subscribe(resp => {
         this.game = resp
         this.backgroundImg =this.game.backgroundImage
+        this.store.select(isGameInLibrary(this.gameId)).subscribe(resp => console.log('is game in library??', resp))
         this.store.select(selectUserLibrary).subscribe(userLibrary => {
-          const game : UserLibrary | undefined = userLibrary.find(g => g.gameId === this.gameId);
+          console.log('current user library from edit review', resp)
+          const game : UserLibrary | undefined = userLibrary.find(g => g.gameId == this.gameId);
           console.log('Game found:', game);
-          this.gameStatus = game?.gameStatus ?? ''
+          this.gameStatus = game?.gameStatus ?? 'Uncategorized'
           this.reviewForm = this.createForm()
         }).unsubscribe();  
       });
@@ -102,6 +104,7 @@ export class EditReviewComponent implements OnInit {
       console.log(resp.success)      
       if(resp.success){
         alert('Review Deleted')
+        this.cache.clear('/api/reviews/game/' + this.currentReview.gameId)
         this.router.navigate(['/game', this.currentReview.gameId])
       } else {
         alert('Failed to deleter review')
