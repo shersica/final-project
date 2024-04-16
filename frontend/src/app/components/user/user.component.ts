@@ -34,6 +34,11 @@ export class UserComponent implements OnInit {
   profile!: UserProfile
   isFollowing!: boolean
   panelOpenState = false
+  uncategorized!: UserLibrary[]
+  currentlyPlaying!: UserLibrary[]
+  completed!: UserLibrary[]
+  notPlayed!: UserLibrary[]
+  played!: UserLibrary[]
 
 
   ngOnInit(): void {
@@ -52,6 +57,7 @@ export class UserComponent implements OnInit {
             const form = this.createForm(game.gameStatus, game.userRating);
             this.gameForms.push(form);
           })
+          this.sortLibrary(this.userLibrary)
         });
       } else {
         //Get UL -> DIsplay 
@@ -63,29 +69,13 @@ export class UserComponent implements OnInit {
           });
  
           this.userLibrary = resp;
+          this.sortLibrary(this.userLibrary)
         });
       }
 
-      // this.userSvc.getUserLibrary(this.username).subscribe((resp: UserLibrary[]) => {
-      //   this.store.dispatch(Actions.setUserLibrary({ userLibrary: resp }));
-      //   resp.forEach(game => {
-      //     const form = this.createForm(game.gameStatus, game.userRating);
-      //     this.gameForms.push(form);
-      //   });
-      //      // Subscribe to the userLibrary store state to get userLibrary data
-      //   this.store.pipe(select(selectUserLibrary)).subscribe(userLibrary => {
-      //     this.userLibrary = userLibrary;
-      //     console.log(userLibrary);
-      //   });
-      // });
       //Get User Profile
       this.userSvc.getUserProfile(this.username).subscribe(resp => this.profile = resp )
     });
-  
-    // Subscribe to the currentUser store state to get currentUser data
-    // this.store.pipe(select(selectUser)).subscribe(user => {
-    //   this.currentUser = user;
-    // });
 
     //Check if currentuser is following user
     this.userSvc.getUserSocials(this.currentUser?.username).subscribe((resp: UserSocials) => {
@@ -107,6 +97,10 @@ export class UserComponent implements OnInit {
     const rating = this.gameForms[index].value['userRating'];
     this.store.dispatch(updateUserLibrary({gameId : gameId , gameStatus : status, userRating : rating}))
     console.log('updating user library:', this.userLibrary)
+    this.store.pipe(select(selectUserLibrary)).subscribe(userLibrary => {
+      this.userLibrary = userLibrary;
+      this.sortLibrary(this.userLibrary)
+    });
   }
 
   deleteFromUserLibrary(id: string, gameId : number){
@@ -133,5 +127,46 @@ export class UserComponent implements OnInit {
     });
   }
 
+  sortLibrary(userLibrary: UserLibrary[]){
+    const uncategorized: UserLibrary[] = [];
+    const currentlyPlaying: UserLibrary[] = [];
+    const completed: UserLibrary[] = [];
+    const played: UserLibrary[] = [];
+    const notPlayed: UserLibrary[] = [];
+    this.uncategorized = []
+    this.currentlyPlaying = []
+    this.completed = []
+    this.played = []
+    this.notPlayed = []
+
+
+    userLibrary.forEach(game => {
+        switch (game.gameStatus) {
+            case 'Uncategorized':
+                  uncategorized.push(game);
+                  this.uncategorized = uncategorized
+                  break;
+            case 'Currently Playing':
+                currentlyPlaying.push(game);
+                this.currentlyPlaying = currentlyPlaying
+                break;
+            case 'Completed':
+                completed.push(game);
+                this.completed = completed
+                break;
+            case 'Played':
+                played.push(game);
+                this.played = played
+                break;
+            case 'Not Played':
+                notPlayed.push(game);
+                this.notPlayed = notPlayed
+                break;
+            default:
+                break;
+        }
+    });
+
+  }
 
 }

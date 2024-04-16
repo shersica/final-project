@@ -1,53 +1,36 @@
 <div class="container">
-    <h2>{{username | titlecase}}'s Profile</h2>
+    <!-- <h2>{{username | titlecase}}'s Profile</h2>
 
 <img class="profilePic" [src]="profile.profilePic" width="200" alt="Profile Picture">
-<p>{{profile.bio}}</p>
-
-<div *ngIf="currentUser?.username !== username; else isCurrentUser">
-    <div *ngIf="isFollowing; else follow">
-        <button (click)="unfollowUser(username, currentUser?.username)">Unfollow</button>
+<p>{{profile.bio}}</p> -->
+<div class="profile-container">
+    <img class="profilePic" [src]="profile.profilePic" width="200" alt="Profile Picture">
+    <div class="profile-info">
+        <h2>{{username | titlecase}}'s Profile</h2>
+        <p>{{profile.bio}}</p>
+    <div *ngIf="currentUser?.username !== username; else isCurrentUser">
+        <div *ngIf="isFollowing; else follow">
+            <button mat-raised-button (click)="unfollowUser(username, currentUser?.username)">Unfollow</button>
+        </div>
     </div>
+    </div>
+
 </div>
 
+
+
 <ng-template #isCurrentUser>
-    <button [routerLink]="['/settings', currentUser?.username]">Settings</button>
+    <button mat-raised-button [routerLink]="['/settings', currentUser?.username]">Settings</button>
 </ng-template>
 
 <ng-template #follow>
-    <button (click)="followUser(username, currentUser?.username)">Follow</button>
+    <button mat-raised-button (click)="followUser(username, currentUser?.username)">Follow</button>
 </ng-template>
 
 
 <mat-tab-group>
     <mat-tab class="tabs" label="Library">
         <br><br>
-        <!-- <div *ngFor="let game of userLibrary; let i = index">
-            <p>Status: {{game.gameStatus}}</p>
-            <div *ngIf="currentUser?.username == username">
-                <form [formGroup]="gameForms[i]">
-                    <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                        <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                            {{ status }}
-                        </option>
-                    </select>
-                    <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                        <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                            {{ rating }}
-                        </option>
-                    </select>
-                </form>
-            </div>
-            <a [routerLink]="['/game', game.gameId]">{{game.name}}</a>
-            <p>Id: {{game.gameId}}</p>
-            <img [src]="game.images[0]" alt="" width="200">
-            <div *ngFor="let platform of game.platforms">
-                <span>{{platform}}</span>
-            </div>
-            <p>Released date: {{game.releaseDate}}</p>    
-            
-            <button (click)="deleteFromUserLibrary(game.gameId)">Delete from Library</button>
-        </div> -->
         <mat-accordion class="example-headers-align" multi>
             <mat-expansion-panel class="expansion-panel-1" (opened)="panelOpenState = true"
                                (closed)="panelOpenState = false">
@@ -57,7 +40,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="responsive-grid">
-            <mat-card class="example-card" *ngFor="let game of userLibrary; let i = index">
+            <mat-card class="example-card" *ngFor="let game of uncategorized; let i = index">
                 <img mat-card-image [src]="game.backgroundImage" width="100%" alt="Photo of the Game">
               <mat-card-header>
                 <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
@@ -88,32 +71,128 @@
                 Currently Playing
             </mat-panel-title>
             </mat-expansion-panel-header>
-            <p>This is the primary content of the panel.</p>
-          </mat-expansion-panel>
+            <div class="responsive-grid">
+                <mat-card class="example-card" *ngFor="let game of currentlyPlaying; let i = index">
+                    <img mat-card-image [src]="game.backgroundImage" width="100%" alt="Photo of the Game">
+                  <mat-card-header>
+                    <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div *ngIf="currentUser?.username == username">
+                        <form [formGroup]="gameForms[i]">
+                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                                    {{ status }}
+                                </option>
+                            </select>
+                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                                    {{ rating }}
+                                </option>
+                            </select>
+                        </form>
+                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                    </div>
+                </mat-card-content>
+                </mat-card>
+                </div>
+        </mat-expansion-panel>
           <mat-expansion-panel class="expansion-panel-1">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Completed
             </mat-panel-title>
             </mat-expansion-panel-header>
-            <p>This is the primary content of the panel.</p>
-          </mat-expansion-panel >
+            <div class="responsive-grid">
+                <mat-card class="example-card" *ngFor="let game of completed; let i = index">
+                    <img mat-card-image [src]="game.backgroundImage" width="100%" alt="Photo of the Game">
+                  <mat-card-header>
+                    <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div *ngIf="currentUser?.username == username">
+                        <form [formGroup]="gameForms[i]">
+                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                                    {{ status }}
+                                </option>
+                            </select>
+                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                                    {{ rating }}
+                                </option>
+                            </select>
+                        </form>
+                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                    </div>
+                </mat-card-content>
+                </mat-card>
+                </div>
+        </mat-expansion-panel >
           <mat-expansion-panel class="expansion-panel-1">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Played
             </mat-panel-title>
             </mat-expansion-panel-header>
-            <p>This is the primary content of the panel.</p>
-          </mat-expansion-panel>
+            <div class="responsive-grid">
+                <mat-card class="example-card" *ngFor="let game of played; let i = index">
+                    <img mat-card-image [src]="game.backgroundImage" width="100%" alt="Photo of the Game">
+                  <mat-card-header>
+                    <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div *ngIf="currentUser?.username == username">
+                        <form [formGroup]="gameForms[i]">
+                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                                    {{ status }}
+                                </option>
+                            </select>
+                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                                    {{ rating }}
+                                </option>
+                            </select>
+                        </form>
+                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                    </div>
+                </mat-card-content>
+                </mat-card>
+                </div>
+        </mat-expansion-panel>
           <mat-expansion-panel class="expansion-panel-1">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Not Played
             </mat-panel-title>
             </mat-expansion-panel-header>
-            <p>This is the primary content of the panel.</p>
-          </mat-expansion-panel>
+            <div class="responsive-grid">
+                <mat-card class="example-card" *ngFor="let game of notPlayed; let i = index">
+                    <img mat-card-image [src]="game.backgroundImage" width="100%" alt="Photo of the Game">
+                  <mat-card-header>
+                    <mat-card-title><a [routerLink]="['/game', game.gameId]" class="custom-link">{{ game.name }} </a></mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div *ngIf="currentUser?.username == username">
+                        <form [formGroup]="gameForms[i]">
+                            <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
+                                    {{ status }}
+                                </option>
+                            </select>
+                            <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
+                                <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
+                                    {{ rating }}
+                                </option>
+                            </select>
+                        </form>
+                        <button (click)="deleteFromUserLibrary(game._id, game.gameId)">Delete from Library</button>
+                    </div>
+                </mat-card-content>
+                </mat-card>
+                </div>
+        </mat-expansion-panel>
           </mat-accordion>
 
     </mat-tab>

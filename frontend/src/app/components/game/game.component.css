@@ -1,15 +1,16 @@
 .container {
     position: relative;
     padding: 24px;
-    min-height: 100vh; /* Change height to min-height to allow for dynamic content */
+    height: auto;
+    /* min-height: 100vh;  */
     color: azure;
     background-size:cover;
     background-position: center;
     background-color: #202020;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center children horizontally */
-    align-items: center; /* Center children vertically */
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
 }
 
 .container::before {
@@ -76,23 +77,38 @@
 
 .platform-container {
     text-align: left;
+    padding-bottom: 20px;
+    padding-right: 20px;
 }
 
-.title {
-    color: hsla(0, 0%, 100%, .2);
+.genre-container {
+    text-align: left;
+    padding-bottom: 20px;
+
+}
+
+.info-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    
 }
 
 .release-date-container{
-text-align: left;
+    text-align: left;
 }
 
-.btm-container {
+.stores-container {
+    text-align: left;
+    padding-bottom: 20px;
 
 }
 
+.developers-container {
+    text-align: left;
+}
 
 .website-container {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     text-align: left;
 }
 
@@ -104,3 +120,86 @@ text-align: left;
 .website-container a:hover {
     text-decoration: underline;
 }
+
+/* .btm-container {
+    height: auto;
+    align-items: center;
+} */
+
+.title {
+    color: hsla(0, 0%, 100%, .2);
+}
+
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 24px;
+}
+
+.example-card {
+    height: auto;
+    background-color: rgba(0, 0, 0, .3);
+    transition: transform 0.3s ease;
+    width: auto
+    /* Add any other styling as needed */
+}
+
+.example-card:hover {
+    transform: scale(1.1);
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.custom-link:hover {
+    text-decoration: underline;
+}
+
+.card-title {
+        height: 50px; /* Adjust the height as needed */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+}
+
+
+.card-header {
+    display: flex;
+    align-items: center; /* Vertically center align content */
+    justify-content: space-between ;
+}
+
+.card-content {
+    padding-bottom: 20px; /* Uncomment if you want padding at the bottom */
+}
+
+.review-container {
+    color: azure;
+    padding: 24px;
+    height: auto; /* Adjusted to allow container to expand based on content */
+    width: 50%;
+}
+
+.like-button,
+.dislike-button {
+    align-self: flex-end; /* Align buttons to the bottom of the card */
+    color: inherit; /* Inherit text color from parent */
+}
+
+.like-button mat-icon,
+.dislike-button mat-icon {
+    vertical-align: middle; /* Align icon vertically */
+    margin-right: 4px; /* Add some space between icon and text */
+}
+
+.like-button {
+    color: #1976D2; /* Color for like button */
+}
+
+.dislike-button {
+    color: #E53935; /* Color for dislike button */
+}
+

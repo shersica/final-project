@@ -29,8 +29,12 @@
     height: 100vh;
 }
 
-/* .responsive-grid {
+.responsive-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
-  } */
+  }
+
+  .else-text{
+    text-align: center;
+}

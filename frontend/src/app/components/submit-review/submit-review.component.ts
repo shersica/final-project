@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GameService } from '../../game.service';
 import { GameDetails, Review, User, UserLibrary } from '../../models';
 import { Store, select } from '@ngrx/store';
@@ -17,6 +17,7 @@ import { UserService } from '../../user.service';
 })
 export class SubmitReviewComponent implements OnInit {
 
+  private router = inject(Router)
   private userSvc = inject(UserService)
   private reviewSvc = inject(ReviewService)
   private store = inject(Store)
@@ -69,7 +70,10 @@ export class SubmitReviewComponent implements OnInit {
     this.store.dispatch(updateUserLibrary({gameId : review.gameId , gameStatus: this.gameStatus, userRating : review.rating}))
     this.store.select(selectUserLibrary).subscribe(userLibrary => this.userLibrary = userLibrary )
     this.userSvc.saveUserLibrary(this.userLibrary).subscribe()
-    this.reviewSvc.submitReview(review).subscribe(resp => console.log(resp.success))
+    this.reviewSvc.submitReview(review).subscribe(resp => {
+      console.log(resp.success)
+      this.router.navigate(['/game', this.game.gameId])
+    })
   }
 
 }

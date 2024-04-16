@@ -17,7 +17,7 @@ public class EmailMessage {
     </head> 
     <div class=\"body\"> 
         <h1> Welcome to PlayPal </h1> 
-        <img src=\"https://sm.ign.com/ign_nordic/screenshot/default/beta-key-art-valorant_jg8t.jpg\"/> 
+        <img src=\"https://vttp.sgp1.cdn.digitaloceanspaces.com/images/PlayPal.png\"/> 
         <p> Discover new games and keep track of them in your Library! </p> 
         <br><br>
         <p>Cheers,</p>

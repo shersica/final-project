@@ -1,9 +1,10 @@
-<div class="container">
-    <mat-card *ngFor="let review of reviews">
-        <mat-card-header>
-            <mat-card-title><a [routerLink]="['/game', review.gameId]">{{review.gameName}}</a></mat-card-title>
+<div class="container responsive-grid">
+    <mat-card class="example-card" *ngFor="let review of reviews">
+        <mat-card-header class="card-header">
+            <mat-card-title><a class="custom-link card-title" [routerLink]="['/game', review.gameId]">{{review.gameName}}</a></mat-card-title>
+            <mat-card-subtitle class="subtitle">{{review.rating}}</mat-card-subtitle>
             <div *ngIf="currentUser?.username == this.username">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="menu-icon">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
@@ -22,11 +23,11 @@
         </mat-card-header>
 
         <br>
-        <mat-card-content>
+        <mat-card-content class="mat-card-content">
             <p>{{review.comment}}</p>
             <br>
-            <p>By <a [routerLink]="['/user', review.reviewer]">{{review.reviewer | titlecase}}</a></p>
-            <p>Posted on {{review.date | date}}</p>
+            <p>By <a class="custom-link" [routerLink]="['/user', review.reviewer]">{{review.reviewer | titlecase}}</a></p>
+            <p class="card-content">Posted on {{review.date | date}}</p>
         </mat-card-content>
     </mat-card>
 </div>

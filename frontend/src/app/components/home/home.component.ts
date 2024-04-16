@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Game } from '../../models';
+import { Filter, Game } from '../../models';
 import { GameService } from '../../game.service';
 import { FormControl } from '@angular/forms';
 
@@ -14,7 +14,15 @@ export class HomeComponent implements OnInit {
   games$!: Promise<Game[]>
   orderByControl = new FormControl('-relevance'); // Default orderBy option
   page = 1
-
+  filters: Filter[] = [
+    {value: '-relevance', viewValue: 'Relevance'},
+    {value: '-created', viewValue: 'Date Added'},
+    {value: 'name', viewValue: 'Name'},
+    {value: '-added', viewValue: 'Popularity'},
+    {value: '-released', viewValue: 'Release Date'},
+    {value: '-rating', viewValue: 'Average Rating'},
+  ];
+  selectedFilter = this.filters[0].value;
 
   ngOnInit(): void {
     this.loadGames()
@@ -30,8 +38,14 @@ export class HomeComponent implements OnInit {
     this.loadGames()
   }
 
+  previousPage(){
+    this.page --
+    this.loadGames()
+  }
+
   private loadGames(): void {
     const orderBy = this.orderByControl.value as string
+    console.log(orderBy)
     this.games$ = this.gameSvc.discoverGames(orderBy, this.page)
   }
 

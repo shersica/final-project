@@ -1,15 +1,59 @@
 .container {
     color: azure;
     padding: 24px;
-    height: 100vh;
-    
+    height: auto; /* Adjusted to allow container to expand based on content */
 }
 
-mat-card {
-    width: 400px;
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 24px;
+}
+
+.example-card {
+    height: auto;
     background-color: rgba(0, 0, 0, .3);
-    color: azure;
+    transition: transform 0.3s ease;
+    width: auto
+    /* Add any other styling as needed */
+}
+
+.example-card:hover {
+    transform: scale(1.1);
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.custom-link:hover {
+    text-decoration: underline;
+}
+
+.card-title {
+        height: 50px; /* Adjust the height as needed */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
 }
 
 
+.card-header {
+    display: flex;
+    align-items: center; /* Vertically center align content */
+    justify-content: space-between ;
+}
 
+.card-content {
+    padding-bottom: 20px; /* Uncomment if you want padding at the bottom */
+}
+
+.subtitle {
+    color: rgb(166, 164, 164);
+}
+
+.menu-icon {
+    margin-left: auto; /* Pushes the menu icon to the right */
+}

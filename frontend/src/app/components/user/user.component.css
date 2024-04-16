@@ -8,7 +8,7 @@
 }
 
 .container {
-    height: 100vh; /* Adjust height as needed */
+    height: auto; /* Adjust height as needed */
     color: azure;
     background-color: #151515;
     padding:24px
@@ -65,7 +65,7 @@
 ::ng-deep .expansion-panel-1 .mat-expansion-panel-body{
     padding: 30px;
     color: white;
-    height: 50vh;
+    height: auto;
 }
 
 /* .expansion-panel-1 .mat-expansion-panel-header[aria-disabled=true]{
@@ -134,4 +134,19 @@
 
 .custom-link:hover {
     text-decoration: none;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    padding-bottom: 40px;
+}
+
+.profile-info {
+    margin-left: 20px; /* Adjust margin between the image and text */
+    flex: 1;
+}
+
+.user-button {
+    margin-left: 10px; /* Adjust margin between the profile info and button */
 }

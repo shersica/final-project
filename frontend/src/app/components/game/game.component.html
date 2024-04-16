@@ -25,51 +25,60 @@
         <div class="btm-container">
             <div class="info-container">
                 <div class="platform-container">
-                    <h3 class="title">Platforms</h3>
-                    <div *ngFor="let platform of game.platforms">
-                        <p>{{platform}}</p>
-                    </div>
+                    <h3 class="title"><span>Platforms:</span></h3>
+                    <span *ngFor="let platform of game.platforms; let last = last">
+                        <span>{{ platform }}</span>
+                        <span *ngIf="!last">, </span>
+                    </span>
                 </div>
                 <div class="release-date-container">
                     <h3 class="title">Release Date</h3>
                     <p>{{game.releaseDate}}</p>
                 </div>
                 <div class="genre-container">
-                    <h3 class="title">Genres</h3>
-                    <div *ngFor="let genre of game.genres">
-                        <p>{{genre}}</p>
+                    <h3 class="title"><span>Genres </span></h3>
+                    <div>
+                        <span *ngFor="let genre of game.genres; let last = last">
+                            <span>{{ genre }}</span>
+                            <span *ngIf="!last">, </span>
+                        </span>
                     </div>
                 </div>
                 <div class="stores-container">
-                    <h3 class="title">Stores</h3>
-                    <div *ngFor="let store of game.stores">
-                        <p>{{store}}</p>
+                    <h3 class="title"><span>Stores </span></h3>
+                    <div>
+                        <span *ngFor="let store of game.stores; let last = last">
+                            <span>{{ store }}</span>
+                            <span *ngIf="!last">, </span>
+                        </span>
                     </div>
                 </div>
                 <div class="developers-container">
-                    <h3 class="title">Developers</h3>
-                    <div *ngFor="let dev of game.developers">
-                        <p>{{dev}}</p>
+                    <h3 class="title"><span>Developers </span></h3>
+                    <div>
+                        <span *ngFor="let dev of game.developers; let last = last">
+                            <span>{{ dev }}</span>
+                            <span *ngIf="!last">, </span>
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="website-container">
-                <h3 class="title">Website</h3>
-                <a [href]="game.website">{{game.website}}</a>
+                <div class="website-container">
+                    <h3 class="title">Website</h3>
+                    <a [href]="game.website">{{game.website}}</a>
+                </div>
             </div>
         </div>
 
 
-        <div *ngFor="let rating of game.ratings">
+        <!-- <div *ngFor="let rating of game.ratings">
             <p>{{rating.title | titlecase}}: {{rating.count}}</p>
-        </div>
-        <!-- <p>Released date: {{game.releaseDate}}</p> -->
+        </div> -->
 
         <!-- <button (click)="addToWishlist(game.gameId)">Add to Wishlist</button> -->
     </div>
 
     <br><br>
-    <div class="review-content">
+    <!-- <div class="review-content">
         <div class="" *ngIf="reviews.length > 0; else noReviews">
             <h1>Reviews</h1>
             <table border="1">
@@ -90,13 +99,39 @@
                 </div>
             </table>
         </div>
+    </div> -->
+    <div class="review-container">
+        <div class="" *ngIf="reviews.length > 0; else noReviews">
+            <h1 class="review-content">Reviews</h1>
+            <br><br>
+            <div class="responsive-grid">
+                <mat-card class="example-card" *ngFor="let review of reviews">
+                    <mat-card-header class="card-header">
+                        <mat-card-title>{{review.rating}}</mat-card-title>
+                        <!-- <mat-card-subtitle class="subtitle">{{review.rating}}</mat-card-subtitle> -->
+                    </mat-card-header>
+                    <br>
+                    <mat-card-content class="mat-card-content">
+                        <p>{{review.comment}}</p>
+                        <br>
+                        <p>By <a class="custom-link" [routerLink]="['/user', review.reviewer]">{{review.reviewer | titlecase}}</a></p>
+                        <p class="card-content">Posted on {{review.date | date}}</p>
+                    </mat-card-content>
+                    <mat-card-actions class="card-actions">
+                        <button mat-button class="like-button">{{review.interactions?.likes}}<mat-icon color="primary">thumb_up</mat-icon></button>
+                        <button mat-button class="dislike-button">{{review.interactions?.dislikes}} <mat-icon color="warn">thumb_down</mat-icon></button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
     </div>
+
 </div>
 
 
 
 <ng-template #removeFromLibraryButton>
-    <button (click)="removeFromLibrary(game.gameId)">Remove from My Games</button>
+    <button mat-raised-button (click)="removeFromLibrary(game.gameId)">Remove from My Games</button>
 </ng-template>
 <ng-template #noReviews>
     <h1>Reviews</h1>

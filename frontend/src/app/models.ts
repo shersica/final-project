@@ -95,3 +95,9 @@ export interface UserSocials {
     following: string[]
     followers: string[]
 }
+
+
+export interface Filter {
+    value: string;
+    viewValue: string;
+  }

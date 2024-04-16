@@ -17,7 +17,7 @@ import { UserFollowersComponent } from './components/user-followers/user-followe
 import { UserFollowingComponent } from './components/user-following/user-following.component';
 import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { StoreModule } from '@ngrx/store';
@@ -31,6 +31,8 @@ import { AuthenticationService } from './auth.service';
 import { GameService } from './game.service';
 import { ReviewService } from './review.service';
 import { UserService } from './user.service';
+import { CacheService } from './cache.service';
+import { CacheInterceptor } from './http-interceptors/http-interceptor';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { UserService } from './user.service';
     MaterialModule
   ],
   providers: [
-    provideAnimationsAsync(), AuthenticationService, GameService, ReviewService, UserService
+    provideAnimationsAsync(), AuthenticationService, GameService, ReviewService, UserService, CacheService,
+    {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
 })

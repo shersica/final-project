@@ -6,10 +6,7 @@
     </div>
   </div> -->
   
-  <ng-template #noFollowers>
-    <p>No followers yet.</p>
-    <p [routerLink]="['/user', 'testnew']" >Find Friends!</p>
-  </ng-template>
+
   
 
   <div class="wrapper">
@@ -26,4 +23,9 @@
       </mat-card>
       </div>
     </div>
+
+    <ng-template #noFollowers>
+      <p class="else-text">No followers yet.</p>
+      <!-- <p [routerLink]="['/user', 'testnew']" >Find Friends!</p> -->
+    </ng-template>
 </div>

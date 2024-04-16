@@ -17,11 +17,13 @@ export class SearchComponent {
 
   private gameSvc = inject(GameService)
   games$!: Promise<Game[]>
+  query!: string
 
   ngOnInit(): void {
-    const query = this.activatedRoute.snapshot.queryParams['query']
-    this.games$ = this.gameSvc.searchGames(query)
-    // this.searchForm = this.createForm()
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.query = params['query'];
+      this.games$ = this.gameSvc.searchGames(this.query)
+    });
   }
 
   createForm(): FormGroup {
