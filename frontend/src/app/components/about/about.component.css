@@ -3,10 +3,6 @@
     src: url('/frontend/src/assets/kaboom/monogram.ttf') format('truetype');
 }
 
-/* body{
-    font-family: 'monogram', monospace;
-    overflow: hidden;
-} */
 
 #app {
     width: 100%;
@@ -74,7 +70,6 @@
 }
 
 .container {
-    /* padding-top: 24px; */
     padding: 24px;
     color: azure;
     background-size: cover;

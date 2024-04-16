@@ -1,7 +1,7 @@
 .container {
     color: azure;
     padding: 24px;
-    height: auto; /* Adjusted to allow container to expand based on content */
+    height: auto; 
 }
 
 .responsive-grid {
@@ -15,7 +15,6 @@
     background-color: rgba(0, 0, 0, .3);
     transition: transform 0.3s ease;
     width: auto
-    /* Add any other styling as needed */
 }
 
 .example-card:hover {
@@ -32,7 +31,7 @@
 }
 
 .card-title {
-        height: 50px; /* Adjust the height as needed */
+        height: 50px; 
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -42,12 +41,12 @@
 
 .card-header {
     display: flex;
-    align-items: center; /* Vertically center align content */
-    justify-content: space-between ;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .card-content {
-    padding-bottom: 20px; /* Uncomment if you want padding at the bottom */
+    padding-bottom: 20px;
 }
 
 .subtitle {
@@ -55,5 +54,8 @@
 }
 
 .menu-icon {
-    margin-left: auto; /* Pushes the menu icon to the right */
+    margin-left: auto;
+    order: 2
 }
+
+

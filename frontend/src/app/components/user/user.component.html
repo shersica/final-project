@@ -238,20 +238,7 @@
           </mat-accordion>
 
     </mat-tab>
-    <mat-tab label="Following" [routerLink]="['/user/following', username]"><app-user-following></app-user-following> </mat-tab>
+    <mat-tab label="Following" [routerLink]="['/user/following', username]" ><app-user-following></app-user-following> </mat-tab>
     <mat-tab label="Followers" [routerLink]="['/user/followers', username]"><app-user-followers></app-user-followers> </mat-tab>
     <mat-tab label="Reviews" [routerLink]="['/user', username, 'reviews']"><app-user-reviews></app-user-reviews> </mat-tab>
   </mat-tab-group>
-
-
-                          <!-- <select formControlName="gameStatus" (change)="updateUserLibrary(game.gameId, i)">
-                            <option *ngFor="let status of gameStatusTypes" [value]="status" [selected]="status === game.gameStatus">
-                                {{ status }}
-                            </option>
-                        </select> -->
-
-                                                <!-- <select formControlName="userRating" (change)="updateUserLibrary(game.gameId, i)">
-                            <option *ngFor="let rating of ratingTypes" [value]="rating" [selected]="rating === game.userRating">
-                                {{ rating }}
-                            </option>
-                        </select> -->

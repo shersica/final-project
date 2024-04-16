@@ -79,6 +79,7 @@ export class SubmitReviewComponent implements OnInit {
       this.reviewSvc.submitReview(review).subscribe(resp => {
         console.log(resp.success)
         this.cache.clear('/api/reviews/game/' + this.game.gameId)
+        this.cache.clear('api/reviews/user/' + this.currentUser?.username)
         this.router.navigate(['/game', this.game.gameId])
       })
     }

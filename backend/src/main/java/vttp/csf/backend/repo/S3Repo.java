@@ -25,7 +25,7 @@ public class S3Repo {
         metadata.setContentLength(size);
 
         // String key = "images/%s".formatted(imageId);
-        String key = "images/%s".formatted(imageId);
+        String key = "playpaltest/%s".formatted(imageId);
 
 
         PutObjectRequest putReq = new PutObjectRequest(bucketName, key, is, metadata);

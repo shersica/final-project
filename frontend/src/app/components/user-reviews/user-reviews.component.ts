@@ -5,6 +5,7 @@ import { Review, User } from '../../models';
 import { GameService } from '../../game.service';
 import { Store } from '@ngrx/store';
 import { isLoggedIn, selectUser } from '../../store/selectors';
+import { CacheService } from '../../cache.service';
 
 @Component({
   selector: 'app-user-reviews',
@@ -13,6 +14,7 @@ import { isLoggedIn, selectUser } from '../../store/selectors';
 })
 export class UserReviewsComponent implements OnInit {
 
+  private cache = inject(CacheService)
   private store = inject(Store)
   private router = inject(Router)
   private gameSvc = inject(GameService)
@@ -28,6 +30,7 @@ export class UserReviewsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.username = params['username'];
+      this.cache.clear('/api/reviews/user/' + this.username)
       this.reviewSvc.getReviewsByUser(this.username).subscribe(resp => {
         this.reviews = resp
         this.fetchGameNamesForReviews()

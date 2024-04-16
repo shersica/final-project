@@ -17,8 +17,8 @@
 
 :host .mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
     --mdc-tab-indicator-active-indicator-color: white;
-    --mat-tab-header-disabled-ripple-color: rgba(255, 255, 255, 0.38);
-    --mat-tab-header-pagination-icon-color: white;
+    /* --mat-tab-header-disabled-ripple-color: rgba(255, 255, 255, 0.38); */
+    /* --mat-tab-header-pagination-icon-color: white; */
     --mat-tab-header-inactive-label-text-color: rgba(255, 255, 255, 0.6);
     --mat-tab-header-active-label-text-color: white;
     --mat-tab-header-active-ripple-color: white;
@@ -33,13 +33,19 @@
     --mat-expansion-container-text-color: white;
     --mat-expansion-container-background-color: #202020;
 
-    --mat-expansion-actions-divider-color: white;
-    --mat-expansion-header-hover-state-layer-color: white;
+    /* --mat-expansion-actions-divider-color: white; */
+    /* --mat-expansion-header-hover-state-layer-color: white; */
     --mat-expansion-header-focus-state-layer-color: white;
     --mat-expansion-header-disabled-state-text-color: white;
     --mat-expansion-header-text-color:white;
     --mat-expansion-header-description-color: white;
     --mat-expansion-header-indicator-color: white;
+
+    --mat-select-enabled-arrow-color: white;
+    --mat-select-enabled-trigger-text-color:white;
+    --mat-select-panel-background-color: #202020;
+    --mat-select-disabled-trigger-text-color: white;
+    --mat-select-placeholder-text-color:white;
 }
 
 .expansion-panel-1.mat-expansion-panel .mat-expansion-panel-header {
@@ -140,20 +146,6 @@
     flex: 1;
 }
 
-.user-button {
-    margin-left: 10px;
-}
-
-:host {
-    --mdc-outlined-text-field-outline-color: white;
-    --mdc-outlined-text-field-input-text-color: white;
-    --mat-select-enabled-arrow-color: white;
-    --mat-select-enabled-trigger-text-color:white;
-    --mat-select-panel-background-color: #202020;
-    --mat-select-disabled-trigger-text-color: white;
-    --mat-select-placeholder-text-color:white;
-}
-  
   
   .select-wrapper{
     border-radius: 10px;
@@ -161,25 +153,25 @@
     padding: 10px;
     width: 200px;
     color: azure;
-    margin-bottom: 16px; /* Add margin between select dropdowns */
+    margin-bottom: 16px;
 
   }
 
   .mat-card-content {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Align items vertically in the center */
-    align-items: center; /* Align items horizontally in the center */
+    justify-content: center; 
+    align-items: center;
   }
   
   button {
-    margin-top: 16px; /* Add margin above the button */
+    margin-top: 16px; 
   }
 
   .button-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Align items vertically in the center */
-    align-items: center; /* Align items horizontally in the center */
+    justify-content: center; 
+    align-items: center; 
   }
   

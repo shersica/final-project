@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game, User, UserLibrary, UserProfile, UserSocials } from '../../models';
 import { Store, select } from '@ngrx/store';
@@ -8,7 +8,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { addToFollowing, deleteFromUserLibrary, updateUserLibrary } from '../../store/action';
 import { isLoggedIn, selectUser } from '../../store/selectors';
 import { UserService } from '../../user.service';
-import * as Actions from '../../store/action'
+import { CacheService } from '../../cache.service';
+import { UserFollowingComponent } from '../user-following/user-following.component';
+import { UserFollowersComponent } from '../user-followers/user-followers.component';
 
 
 @Component({
@@ -18,6 +20,10 @@ import * as Actions from '../../store/action'
 })
 export class UserComponent implements OnInit {
 
+  @ViewChild(UserFollowingComponent) followingComponent!: UserFollowingComponent;
+  @ViewChild(UserFollowersComponent) followersComponent!: UserFollowersComponent
+
+  private cache = inject(CacheService)
   private router =inject(Router)
   private userSvc = inject(UserService)
   private fb: FormBuilder = inject(FormBuilder)
@@ -29,7 +35,6 @@ export class UserComponent implements OnInit {
   userLibrary!: UserLibrary[]
   gameStatusTypes = ['Uncategorized', 'Currently Playing', 'Completed', 'Played', 'Not Played']
   currentUser! : User | null
-  // gameForms1: FormGroup[] = [];
   ratingTypes = ['Not Yet Rated','Exceptional', 'Recommend', 'Meh', 'Skip']
   following : string[] = []
   profile!: UserProfile
@@ -135,6 +140,12 @@ export class UserComponent implements OnInit {
       this.userSvc.followUser(usernameToFollow, currentUser).then(resp => { 
         console.log(resp.success)
         this.isFollowing = true
+        const username = this.currentUser?.username
+        const username2 = usernameToFollow
+        this.cache.clear(`/api/user/${username}/socials`)
+        this.cache.clear(`/api/user/${usernameToFollow}/socials`)
+        this.followingComponent.updateFollowing()
+        this.followersComponent.updateFollowers()
       });
     } else {
       this.router.navigate(['/login'])
@@ -143,11 +154,18 @@ export class UserComponent implements OnInit {
     
   }
 
+
   unfollowUser(usernameToUnfollow : string, currentUser : any){
     if(this.isLoggedIn){
       this.userSvc.unfollowUser(usernameToUnfollow, currentUser).then(resp => {
         console.log(resp.success)
         this.isFollowing = false
+        const username = this.currentUser?.username
+        const username2 = usernameToUnfollow
+        this.cache.clear(`/api/user/${username}/socials`)
+        this.cache.clear(`/api/user/${usernameToUnfollow}/socials`)
+        this.followingComponent.updateFollowing()
+        this.followersComponent.updateFollowers()
       });
     } else {
       this.router.navigate(['/login'])

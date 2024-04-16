@@ -26,19 +26,36 @@ export class UserFollowersComponent implements OnInit {
       this.userSvc.getUserSocials(this.username).subscribe((resp: UserSocials) => {
         this.followers = resp.followers
         console.log('folllowing', this.followers)
-        if(this.followers.length === 0){
-          this.userProfiles = []
-        } else {
+        this.userProfiles = []
+        if(this.followers.length > 0){
           this.followers.forEach(username => {
             this.userSvc.getUserProfile(username).subscribe((resp: UserProfile) => {
               console.log('profile', resp)
-              this.userProfiles = []
               this.userProfiles.push(resp)
             })
            })
         }
      })
   })
+  }
+
+  updateFollowers(){
+    console.log('updating followers')
+    this.username = this.activatedRoute.snapshot.params['username'];
+      console.log('from update suername',this.username)
+      this.userSvc.getUserSocials(this.username).subscribe((resp: UserSocials) => {
+        this.followers = resp.followers
+        console.log('folllowing', this.followers)
+        this.userProfiles =[]
+        if(this.followers.length > 0){
+          this.followers.forEach(username => {
+            this.userSvc.getUserProfile(username).subscribe((resp: UserProfile) => {
+              console.log('profile', resp)
+              this.userProfiles.push(resp)
+            })
+           })
+        }
+     })
   }
 
 
