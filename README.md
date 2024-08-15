@@ -11,9 +11,14 @@ PlayPal is an app for gamers to discover and track their games while connecting 
 Fun Feature:
 Gamified experience using Kaboom.js when exploring the About page
 
-Demo Videos
+Demo Video & Snippets
 ---
 For a full, concise video of the web app, [click here](https://drive.google.com/file/d/1aHQRFsU6NEJgRuXCGgqMiXgz8dw1zH0T/view?usp=sharing)
 
-https://github.com/user-attachments/assets/901d6d02-b6e3-41bf-b96b-4fc13254dc34
+
+![trending-games](https://github.com/user-attachments/assets/291fdce1-8abe-4430-92d0-89dce37d9df4)
+![game-info](https://github.com/user-attachments/assets/e97727e4-bcdb-4b5c-81e7-4d7fa5c1e3f0)
+![user-library](https://github.com/user-attachments/assets/b8cd5d0e-487d-4187-ac50-a578d5035a89)
+![reviews](https://github.com/user-attachments/assets/cb307934-d1f8-4967-a0d5-454fced6eb50)
+![about-page](https://github.com/user-attachments/assets/e5afb039-0bc7-4d21-9b15-a179f0a45d19)
 
