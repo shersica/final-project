@@ -1,4 +1,4 @@
-#PlayPal
+# PlayPal
 
 PlayPal is an app for gamers to discover and track their games while connecting with friends to share and review their gaming experiences. Built using Springboot, JWT, Angular, Kaboom.Js
 
