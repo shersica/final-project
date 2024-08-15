@@ -13,7 +13,7 @@ Gamified experience using Kaboom.js when exploring the About page
 
 Demo Video & Snippets
 ---
-For a full, concise video of the web app, [click here](https://drive.google.com/file/d/1aHQRFsU6NEJgRuXCGgqMiXgz8dw1zH0T/view?usp=sharing)
+For a full, concise video of the web app, [click here!](https://drive.google.com/file/d/1aHQRFsU6NEJgRuXCGgqMiXgz8dw1zH0T/view?usp=sharing)
 
 
 ![trending-games](https://github.com/user-attachments/assets/291fdce1-8abe-4430-92d0-89dce37d9df4)
