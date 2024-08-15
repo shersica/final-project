@@ -13,8 +13,7 @@ Gamified experience using Kaboom.js when exploring the About page
 
 Demo Videos
 ---
-https://github.com/user-attachments/assets/8ee4c15e-4db1-4146-93fa-93f9ca32785f
-
+For a full, concise video of the web app, [click here](https://drive.google.com/file/d/1aHQRFsU6NEJgRuXCGgqMiXgz8dw1zH0T/view?usp=sharing)
 
 https://github.com/user-attachments/assets/901d6d02-b6e3-41bf-b96b-4fc13254dc34
 
