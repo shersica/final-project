@@ -9,7 +9,7 @@ PlayPal is an app for gamers to discover and track their games while connecting 
 4. **Review System:** Write, edit, and share reviews for games, and interact with others’ reviews through likes and dislikes.
 
 Fun Feature:
-Gamified experience using Kaboom.js when exploring the About page
+Gamified experience using Kaboom.js to explore the 'About' page
 
 Demo Video & Snippets
 ---
